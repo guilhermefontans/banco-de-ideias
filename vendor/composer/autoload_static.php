@@ -25,6 +25,10 @@ class ComposerStaticInit0d1068ba8088da5934765255194ec1f1
         array (
             'Psr\\Log\\' => 8,
         ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
+        ),
         'B' => 
         array (
             'BancoIdeias\\' => 12,
@@ -64,6 +68,10 @@ class ComposerStaticInit0d1068ba8088da5934765255194ec1f1
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
         'BancoIdeias\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
@@ -82,7 +90,7 @@ class ComposerStaticInit0d1068ba8088da5934765255194ec1f1
         array (
             'Pimple' => 
             array (
-                0 => __DIR__ . '/..' . '/pimple/pimple/lib',
+                0 => __DIR__ . '/..' . '/pimple/pimple/src',
             ),
         ),
     );
