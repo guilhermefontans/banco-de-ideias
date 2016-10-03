@@ -1,0 +1,50 @@
+.container{
+	margin-top:10px; 
+}
+table#table_animal, table#tabela_instituicao, table#table_pessoa, table#tabela_modal, table#tabela_anuncio, table#tabela_adocao{
+	border: 2px solid;
+	border-color: black;
+	margin-top: 20px;
+}
+.table-bordered>thead>tr>td, .table-bordered>thead>tr,th{
+	text-align: center;
+	border: 2px solid;
+	border-color: #006dcc;
+}
+
+.table-bordered>tbody>tr>td, 
+.table-bordered>tbody>tr>th, 
+.table-bordered>tfoot>tr>td, 
+.table-bordered>tfoot>tr>th, 
+.table-bordered>thead>tr>td, 
+.table-bordered>thead>tr>th {
+	border: 2px solid black;
+	border-color: #006dcc;
+}
+
+.panel-body {
+	padding: 50px;
+	background-color:#33acff;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	box-shadow: 5px 5px 5px #888888;
+}
+table {
+	color: rgb(53, 87, 35);
+	text-align: center;
+	margin-top: 10px;
+}
+
+table thead {	
+	color: #00004d;
+	background-color:#33acff; 
+}
+.vertical-offset-100 {
+	padding-top:200px;
+}
+.modal-header  {
+	background-color: #33acff;
+	border-radius: 6px;
+	color: #00004d;
+}

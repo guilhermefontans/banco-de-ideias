@@ -1,14 +1,11 @@
 <?php
-use Stox\Auth\BaseAuth;
 
-// Cria um grupo de controllers em 'auth/'
-#$auth = $app['controllers_factory'];
+ini_set('display_errors', 1);
 
-#require __DIR__ . '/rotas/fornecedores.php';
-#require __DIR__ . '/rotas/login.php';
-#require __DIR__ . '/rotas/produtos.php';
+require __DIR__ . '/rotas/ideias.php';
+require __DIR__ . '/rotas/login.php';
+require __DIR__ . '/rotas/premio.php';
 
-// Criar rota before em $auth aqui ...
 // verificar a session
 $app->get('/', function(){
     return view()->render('login/login.twig');
@@ -27,4 +24,3 @@ $app->get('/', function(){
 #
 #// Monta as urls em 'auth/'
 #$app->mount('auth', $auth);
-#

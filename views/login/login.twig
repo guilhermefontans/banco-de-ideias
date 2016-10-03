@@ -1,25 +1,17 @@
 {% extends 'login_template.twig' %}
 
 {% block content %}
-<div class="container">
-    <form class="form-signin" action="{{app.url_base}}/login/verify" method="POST">
-        <h2 class="form-signin-heading">Login - Stox</h2>
-        {#{% if app.my_session.has('error') %}
-        <div class="alert alert-danger">
-            {{app.my_session.flash('error')}}
-        </div>
-        {% endif %}
-        #}
-        <label class="sr-only">Seu Email</label>
-        <input type="email" name="email" class="form-control" placeholder="Seu Email" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="senha" id="inputPassword" class="form-control" placeholder="Senha" required>
-        {#<input type="hidden" name="_token" value="{{token}}">#}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Logar</button>
-        <br />
-        <a href="{{app.url_base}}/login/cadastrar">
-            <span class="btn btn-lg btn-info btn-block">Cadastre-se</span>
-        </a>
+
+<div class="col-xs-8col-xs-offset-2 col-md-4 col-md-offset-4">
+
+    <form class="form-signin" action="{{app.url_base}}login/verify" method="POST">
+    <label for="inputEmail" class="sr-only">login</label>
+    <input type="text" id="inputEmail" name="inputEmail" class="form-control" placeholder="Login" required=true autofocus="">
+    <br>
+    <label for="inputPassword" class="sr-only">senha</label>
+    <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Senha" required="">
+
+    <button class="btn btn-lg btn-primary btn-block" name="btnOperacao" type="submit">Entrar</button>
     </form>
-</div> <!-- /container -->
+</div>
 {% endblock %}
