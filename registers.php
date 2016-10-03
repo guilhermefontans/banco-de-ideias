@@ -3,7 +3,7 @@
  * Registrar aqui todas as dependencias
  */
 
-use Illuminate\Database\Capsule\Manager as DB;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Registra informações do Twig(Template Engine)
@@ -12,6 +12,11 @@ $app->register(new Silex\Provider\TwigServiceProvider, [
     'twig.path' => __DIR__ . '/views'
 ]);
 
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+    'monolog.logfile' => '/var/log/dbideias.log',
+));
+
+$app['request'] = Request::createFromGlobals();
 /**
  * Registro de constantes para o twig
  */
@@ -66,6 +71,10 @@ function view() {
     return $app['twig'];
 }
 
+function request() {
+    global $app;
+    return $app['request'];
+}
 #function session() {
 #    global $app;
 #    return $app['my_session'];
