@@ -10,6 +10,8 @@
         "twig/twig" : "1.22.*",
         "silex/providers": "^2.0",
         "monolog/monolog": "^1.21",
-        "symfony/http-foundation": "^3.1"
+        "symfony/http-foundation": "^3.1",
+        "illuminate/database": "^5.3",
+        "sebastian/environment": "^1.3"
     }
 }

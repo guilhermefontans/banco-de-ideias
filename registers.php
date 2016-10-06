@@ -4,6 +4,7 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Database\Capsule\Manager as DB;
 
 /**
  * Registra informações do Twig(Template Engine)
@@ -17,6 +18,7 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
 ));
 
 $app['request'] = Request::createFromGlobals();
+
 /**
  * Registro de constantes para o twig
  */
@@ -27,28 +29,27 @@ $app['url_auth'] = URL_AUTH;
 // Helper para uso de Session
 #$app['my_session'] =  new Stox\Helpers\Session('TREINAWEB');
 
-/**
- * Registro para funcionar o Iluminate\Database
- 
+
+// Registro para funcionar o Iluminate\Database
+
 $capsule = new DB;
 
 $capsule->addConnection([
-    'driver' => 'mysql',
+    'driver' => DRIVER,
     'host' => HOST,
     'database' => DB,
     'username' => USER,
     'password' => PASS,
-    'charset' => 'utf8',
+    'charset' => CHARSET,
     'collation' => 'utf8_unicode_ci',
     'prefix' => ''
 ]);
 $capsule->setAsGlobal();
 
 unset($capsule);
-*/
 
 /**
- * Regitra Snappy PDF 
+ * Regitra Snappy PDF
  */
 #$app['snappy'] = function () {
 #    $exe = 'C://"Program Files (x86)"/wkhtmltopdf/bin/wkhtmltopdf.exe';
@@ -56,7 +57,7 @@ unset($capsule);
 #};
 
 /**
- * Regitra Classe Helper de Formulario 
+ * Regitra Classe Helper de Formulario
  */
 #$app['html'] = $app->share(function (){
 #    return new Stox\Helpers\FormFields;

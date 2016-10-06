@@ -2,6 +2,7 @@
 
 namespace BancoIdeias\model;
 use BancoIdeias\model\Connection;
+use Illuminate\Database\Capsule\Manager as DB;
 
 abstract class Dao
 {
@@ -13,143 +14,90 @@ abstract class Dao
     {
         $this->tableName = $tableName;
     }
-    public function insert($fields, $values)
+
+    public function insert(array $values)
     {
-        try
-        {
-            //faz a conexão com o BD
-            Connection::connect();
-
-            //monta o comando INSERT
-            $sql = "INSERT INTO $this->tableName ($fields) VALUES
-                    ($values)";
-            echo $sql;
-            //abrir a transação
-            Connection::getConn()->beginTransaction();
-            //Executa o comando no Banco e
-            //retorna a qtde de linhas afetadas
-            $rows_affected=
-                Connection::getConn()->exec($sql);
-
-            //efetivar a transação
-            Connection::getConn()->commit();
-
-            //encerra a conexão
-            Connection::disconnect();
-
-            return $rows_affected;
-        }
-        catch(Exception $ex)
-        {
-            Connection::getConn()->rollBack();
-            throw $ex;
-        }
-    }
-    public function update($fieldsValues, $filter)
-    {
-
-        try
-        {
-            //faz a conexão com o BD
-
-            Connection::connect();
-
-            $filterOrigin = $filter;
-            if ($filter != "")
-                $filter = "WHERE $filter";
-
-            //monta o comando UPDATE
-            $sql = "UPDATE $this->tableName SET $fieldsValues $filter ";
-            //echo $sql;
-            //abrir a transação
-            Connection::getConn()->beginTransaction();
-
-            //Executa o comando no Banco e
-            //retorna a qtde de linhas afetadas
-            $rows_affected=
-                Connection::getConn()->exec($sql);
-
-            //efetivar a transação
-            Connection::getConn()->commit();
-
-            Connection::disconnect();
-
-            return $rows_affected;
-        }
-        catch(Exception $ex)
-        {
-            Connection::getConn()->rollBack();
+        try{
+            DB::beginTransaction();
+            DB::table($this->tableName)->insert($values);
+            DB::commit();
+        } catch (Exception $ex){
+            DB::rollback();
             throw $ex;
         }
     }
 
-    public function delete($filter)
+    public function update($filter = false, array $values)
     {
-        try
-        {
-            //abrir conexão
-            Connection::connect();
+        try{
+            DB::beginTransaction();
 
-            if ($filter != "")
-                $filter = "WHERE $filter";
+            if ( empty($filter) ){
+               DB::table($this->tableName)->update($values);
+            } else {
+                DB::table($this->tableName)
+                    ->where(
+                        $filter[0],
+                        $filter[1],
+                        $filter[2]
+                    )->update($values);
+            }
 
-            //monta o comando DELETE
-            $sql="DELETE FROM
-              $this->tableName $filter";
-            //echo $sql;
-
-            //abrir a transacao
-            Connection::getConn()->beginTransaction();
-
-            //Executa o comando no Banco e
-            //retorna a qtde de linhas afetadas
-            $rows_affected=
-                Connection::getConn()->exec($sql);
-
-            //efetivar a transacao
-            Connection::getConn()->commit();
-
-            Connection::disconnect();
-
-            return $rows_affected;
-        }
-        catch(Exception $ex)
-        {
-            Connection::getConn()->rollBack();
+            DB::commit();
+        } catch (Exception $ex){
+            DB::rollback();
             throw $ex;
         }
     }
-    public function find($columns, $filter)
+
+    public function find($filter = false)
     {
-        try
-        {
-            //faz a conexão com o BD
-            Connection::connect();
+        try{
+            DB::beginTransaction();
 
-            if ($filter != "")
-                $filter = "WHERE $filter";
+            if ( empty($filter) ){
+               $premios = DB::table($this->tableName)->get();
+            } else {
+                $premios = DB::table($this->tableName)
+                    ->where(
+                        $filter[0],
+                        $filter[1],
+                        $filter[2]
+                    )->get();
+            }
 
-            $sql = "SELECT $columns FROM
-                    $this->tableName
-                     $filter ";
-            //echo $sql;
-
-            $this->rs=
-             Connection::getConn()->query($sql);
-
-            $this->rowsSelectaffected=
-               $this->rs->rowCount();
-
-            Connection::disconnect();
-
-            return $this->rowsSelectaffected;
+            DB::commit();
+            return $premios;
+        } catch (Exception $ex){
+            DB::rollback();
+            throw $ex;
         }
-        catch(Exception $ex)
-        {
+    }
+
+    public function delete($filter = false)
+    {
+        try{
+            DB::beginTransaction();
+
+            if ( empty($filter) ){
+               DB::table($this->tableName)->delete();
+            } else {
+                DB::table($this->tableName)
+                    ->where(
+                        $filter[0],
+                        $filter[1],
+                        $filter[2]
+                    )->delete();
+            }
+
+            DB::commit();
+        } catch (Exception $ex){
+            DB::rollback();
             throw $ex;
         }
 
     }
+
     public function findJoin($query)
     {
         try
@@ -176,6 +124,7 @@ abstract class Dao
         }
 
     }
+
     public function getRecordSet()
     {
         try

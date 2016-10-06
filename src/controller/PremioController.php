@@ -2,8 +2,8 @@
 namespace BancoIdeias\controller;
 
 use Silex\Application;
-use BancoIdeias\model\Connection;
 use BancoIdeias\model\PremioDao;
+use Illuminate\Database\Capsule\Manager as DB;
 /**
  * Class LoginController
  * @author yourname
@@ -12,12 +12,31 @@ class PremioController
 {
     public function cadastrar(Application $app)
     {
-        Connection::connect();
         $dao = new PremioDao();
-        $nome = request()->get('nome');
-        $pontos = request()->get('pontos');
-        $return = $dao->insert("codigo, nome, pontos", "'null','$nome', '$pontos'");
-        print $return;
+        $return = $dao->insert(
+            array(
+                "codigo" => null,
+                "nome"   => request()->get('nome'),
+                "pontos" => request()->get('pontos')
+            )
+        );
+
+        return $app->redirect(URL_BASE . 'premio');
+    }
+
+    public function alterar(Application $app, $codigo)
+    {
+        $dao = new PremioDao();
+        $return = $dao->update(
+            array(
+                'codigo', '=', $codigo
+            ),
+            array(
+                "nome"   => request()->get('nome'),
+                "pontos" => request()->get('pontos')
+            )
+        );
+
         return $app->redirect(URL_BASE . 'premio');
     }
 
@@ -26,29 +45,17 @@ class PremioController
         return view()->render('premio/add.twig');
     }
 
-    public function all()
+    public function all(Application $app)
     {
-        Connection::connect();
         $dao = new PremioDao();
-        $linhas=$dao->find("codigo,nome,pontos",'');
-
-        if ($linhas==0) {
-            return view()->render('premio/add.twig');
-        } else {
-            $premios = $dao->getRecordSet();
-            return view()->render('premio/premio.twig',['premios' => $premios]);
-        }
+        $premios = $dao->find();
+        return view()->render('premio/premio.twig',['premios' => $premios]);
     }
 
     public function delete(Application $app, $codigo)
     {
-        Connection::connect();
         $dao = new PremioDao();
-        /* if ($dao->delete($codigo)) { */
-        /*     return $app->redirect(URL_BASE . 'premio'); */
-        /* } */
-        $dao->delete("codigo=$codigo");
+        $dao->delete(array('codigo', '=', $codigo));
         return $app->redirect(URL_BASE . 'premio');
     }
-
 }
