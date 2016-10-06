@@ -7,8 +7,6 @@ use Illuminate\Database\Capsule\Manager as DB;
 abstract class Dao
 {
     private $tableName;
-    private $rs=NULL;
-    private $rowsSelectaffected;
 
     public function __construct($tableName)
     {
@@ -96,52 +94,5 @@ abstract class Dao
             throw $ex;
         }
 
-    }
-
-    public function findJoin($query)
-    {
-        try
-        {
-            //faz a conexão com o BD
-            Connection::connect();
-
-            $sql = "$query";
-            //echo $sql;
-
-            $this->rs=
-             Connection::getConn()->query($sql);
-
-            $this->rowsSelectaffected=
-               $this->rs->rowCount();
-
-            Connection::disconnect();
-
-            return $this->rowsSelectaffected;
-        }
-        catch(Exception $ex)
-        {
-            throw $ex;
-        }
-
-    }
-
-    public function getRecordSet()
-    {
-        try
-        {
-            $return = NULL;
-
-            if (!$this->rs){
-                return NULL;
-            }
-                while($row=$this->rs->fetch())
-                     $return[] = $row;
-            //}
-            return  $return;
-        }
-        catch(Exception $ex)
-        {
-            throw $ex;
-        }
     }
 }
