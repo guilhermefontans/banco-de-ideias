@@ -72,6 +72,22 @@ abstract class Dao
         }
     }
 
+    public function byId($id)
+    {
+        try{
+            DB::beginTransaction();
+
+            $premio = DB::table($this->tableName)
+                ->where('codigo', $id)
+                ->first();
+            DB::commit();
+            return $premio;
+        } catch (Exception $ex){
+            DB::rollback();
+            throw $ex;
+        }
+    }
+
     public function delete($filter = false)
     {
         try{

@@ -3,6 +3,7 @@ namespace BancoIdeias\controller;
 
 use Silex\Application;
 use BancoIdeias\model\PremioDao;
+use BancoIdeias\model\Premio;
 use Illuminate\Database\Capsule\Manager as DB;
 /**
  * Class LoginController
@@ -27,6 +28,15 @@ class PremioController
     public function alterar(Application $app, $codigo)
     {
         $dao = new PremioDao();
+        $premioDB = $dao->byId($codigo);
+        $premio = new Premio();
+        $premio->mount($premioDB);
+        return view()->render('premio/premioform.twig', ['premio' => $premio]);
+    }
+
+    public function update(Application $app, $codigo)
+    {
+        $dao = new PremioDao();
         $return = $dao->update(
             array(
                 'codigo', '=', $codigo
@@ -42,7 +52,7 @@ class PremioController
 
     public function add(Application $app)
     {
-        return view()->render('premio/add.twig');
+        return view()->render('premio/premioform.twig');
     }
 
     public function all(Application $app)
