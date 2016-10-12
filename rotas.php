@@ -2,7 +2,8 @@
 
 ini_set('display_errors', 1);
 
-require __DIR__ . '/rotas/ideias.php';
+require __DIR__ . '/rotas/ideia.php';
+require __DIR__ . '/rotas/area.php';
 require __DIR__ . '/rotas/login.php';
 require __DIR__ . '/rotas/premio.php';
 
