@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.17-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.14  Distrib 5.5.50-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: dbideias
 -- ------------------------------------------------------
--- Server version	10.1.17-MariaDB
+-- Server version	5.5.50-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,6 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `dbideias`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `dbideias` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `dbideias`;
+
+--
 -- Table structure for table `area`
 --
 
@@ -27,7 +35,7 @@ CREATE TABLE `area` (
   `nome` varchar(30) DEFAULT NULL,
   `descricao` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +74,6 @@ CREATE TABLE `ideia` (
 
 LOCK TABLES `ideia` WRITE;
 /*!40000 ALTER TABLE `ideia` DISABLE KEYS */;
-INSERT INTO `ideia` VALUES (1,'Organização','Implantação da organização 5S','CONCLUIDA','ORGANIZACIONAL',1),(2,'Celulares','Novos celulares para o setor ','CONCLUIDA','PRODUTO',1),(3,'Limpeza','aumentar número de funcionários','DIAGNOSTICO','ORGANIZACIONAL',5),(4,'ideia','ideia','NOVA','PRODUTO',5);
 /*!40000 ALTER TABLE `ideia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +98,7 @@ CREATE TABLE `premio` (
 
 LOCK TABLES `premio` WRITE;
 /*!40000 ALTER TABLE `premio` DISABLE KEYS */;
-INSERT INTO `premio` VALUES (2,'Tv 42 polegadas',10000),(3,'Microondas',400),(4,'SmartPhone',1000),(5,'Notebook',5000),(6,'Bicicleta',200),(7,'Monitor 21\"',1000),(8,'Mochila',60),(9,'Skate',50),(10,'Agenda',10),(12,'Batedeira',120);
+INSERT INTO `premio` VALUES (2,'Tv 42 polegadas',10000),(3,'Microondas',400),(4,'SmartPhone',1000),(5,'Notebook',5000),(6,'Bicicleta',200),(7,'Monitor 21\"',1000),(8,' Mochila',60),(9,'Skate',50),(10,'Agenda',10),(12,'Batedeira',120);
 /*!40000 ALTER TABLE `premio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,16 +137,13 @@ CREATE TABLE `usuario` (
   `codigo` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
   `senha` varchar(62) DEFAULT NULL,
-  `tipo` int(10) NOT NULL,
-  `bloqueado` tinyint(1) NOT NULL DEFAULT '0',
+  `isadmin` tinyint(1) DEFAULT NULL,
   `area` int(10) DEFAULT NULL,
   `pontos` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`codigo`),
-  KEY `fk_usuario_1_idx` (`tipo`),
   KEY `fk_usuario_2_idx` (`area`),
-  CONSTRAINT `fk_usuario_1` FOREIGN KEY (`tipo`) REFERENCES `tipo` (`codigo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuario_2` FOREIGN KEY (`area`) REFERENCES `area` (`codigo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +152,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'admin','d033e22ae348aeb5660fc2140aec35850c4da997',1,0,5,'220'),(2,'operador','9d24de3ac7b5fbbe776a6d90fe25a7e3c74a29cc',2,0,1,'0'),(3,'joao','8cb2237d0679ca88db6464eac60da96345513964',2,1,2,'0'),(4,'jorge','8cb2237d0679ca88db6464eac60da96345513964',2,0,3,'1'),(5,'bruno','8cb2237d0679ca88db6464eac60da96345513964',2,0,4,'3');
+INSERT INTO `usuario` VALUES (7,'admin','admin',1,1,'10'),(8,'teste','eu',0,NULL,'10'),(9,'eueu','456',0,NULL,'10');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -161,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-30 23:54:43
+-- Dump completed on 2016-10-13  0:49:55
