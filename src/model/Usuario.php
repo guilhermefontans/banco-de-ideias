@@ -115,11 +115,13 @@ class Usuario
     /**
      * Set isAdmin.
      *
-     * @param isAdmin the value to set.
+     * @param bool $isAdmin the value to set.
+     *
+     * @return void.
      */
     public function setIsAdmin($isAdmin)
     {
-        $this->senha = password_hash($senha, PASSWORD_BCRYPT);
+        $this->isAdmin = $isAdmin;
     }
 
     /**

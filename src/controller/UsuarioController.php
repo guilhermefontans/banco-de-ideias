@@ -15,14 +15,21 @@ class UsuarioController
     public function cadastrar(Application $app)
     {
         $dao = new UsuarioDao();
+        $admin = false;
+        if (request()->get('isadmin')){
+             $admin = true;
+        }
         $return = $dao->insert(
             array(
                 "codigo" => null,
                 "nome"   => request()->get('nome'),
                 "area"   => request()->get('area'),
                 "pontos" => request()->get('pontos'),
-                "senha" => request()->get('senha'),
-                "isadmin" => request()->get('isAdmin')
+                "isadmin" => $admin,
+                "senha" => password_hash(
+                    request()->get('senha'),
+                    PASSWORD_BCRYPT
+                )
             )
         );
 
@@ -35,12 +42,21 @@ class UsuarioController
         $usuarioDB = $dao->byId($codigo);
         $usuario = new Usuario();
         $usuario->mount($usuarioDB);
-        return view()->render('usuario/usuarioform.twig', ['usuario' => $usuario]);
+        return view()->render(
+            'usuario/usuarioform.twig',
+            ['usuario' => $usuario]
+        );
     }
 
     public function update(Application $app, $codigo)
     {
         $dao = new UsuarioDao();
+
+        $admin = false;
+        if (request()->get('isadmin')){
+             $admin = true;
+        }
+
         $return = $dao->update(
             array(
                 'codigo', '=', $codigo
@@ -49,7 +65,7 @@ class UsuarioController
                 "nome"   => request()->get('nome'),
                 "area"   => request()->get('area'),
                 "pontos" => request()->get('pontos'),
-                "isadmin" => request()->get('isAdmin')
+                "isadmin" => $admin
             )
         );
 
@@ -64,8 +80,23 @@ class UsuarioController
     public function all(Application $app)
     {
         $dao = new UsuarioDao();
-        $usuarios = $dao->find();
-        return view()->render('usuario/usuario.twig',['usuarios' => $usuarios]);
+        $usuarios = $dao->join(
+            array(
+                'join' => array(
+                    'area',
+                    'area.codigo',
+                    'usuario.area'
+                ),
+                'fields' => array(
+                    'usuario.*',
+                    'area.nome AS area'
+                )
+            )
+        );
+        return view()->render(
+            'usuario/usuario.twig',
+            ['usuarios' => $usuarios]
+        );
     }
 
     public function delete(Application $app, $codigo)

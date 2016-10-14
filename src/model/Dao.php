@@ -30,8 +30,8 @@ abstract class Dao
         try{
             DB::beginTransaction();
 
-            if ( empty($filter) ){
-               DB::table($this->tableName)->update($values);
+            if (empty($filter)) {
+                DB::table($this->tableName)->update($values);
             } else {
                 DB::table($this->tableName)
                     ->where(
@@ -53,8 +53,8 @@ abstract class Dao
         try{
             DB::beginTransaction();
 
-            if ( empty($filter) ){
-               $premios = DB::table($this->tableName)->get();
+            if (empty($filter)) {
+                $premios = DB::table($this->tableName)->get();
             } else {
                 $premios = DB::table($this->tableName)
                     ->where(
@@ -88,13 +88,26 @@ abstract class Dao
         }
     }
 
+    public function join($parameters = array()) {
+        return DB::table($this->tableName)
+            ->join(
+                $parameters['join'][0],
+                $parameters['join'][1],
+                '=',
+                $parameters['join'][2])
+            ->select(
+                $parameters['fields'][0],
+                $parameters['fields'][1])
+            ->get();
+
+    }
     public function delete($filter = false)
     {
         try{
             DB::beginTransaction();
 
-            if ( empty($filter) ){
-               DB::table($this->tableName)->delete();
+            if (empty($filter)) {
+                DB::table($this->tableName)->delete();
             } else {
                 DB::table($this->tableName)
                     ->where(
@@ -109,6 +122,5 @@ abstract class Dao
             DB::rollback();
             throw $ex;
         }
-
     }
 }
