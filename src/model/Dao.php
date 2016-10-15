@@ -58,9 +58,9 @@ abstract class Dao
             } else {
                 $premios = DB::table($this->tableName)
                     ->where(
-                        $filter[0],
-                        $filter[1],
-                        $filter[2]
+                        "$filter[0]",
+                        "$filter[1]",
+                        "$filter[2]"
                     )->get();
             }
 

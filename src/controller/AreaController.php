@@ -61,7 +61,6 @@ class AreaController
     {
         $dao = new AreaDao();
         $areas = $dao->find();
-        $app['monolog']->addInfo(print_r($areas, true));
         return view()->render('area/area.twig',['areas' => $areas]);
     }
 

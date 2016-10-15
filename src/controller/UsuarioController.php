@@ -3,6 +3,7 @@ namespace BancoIdeias\controller;
 
 use Silex\Application;
 use BancoIdeias\model\UsuarioDao;
+use BancoIdeias\model\AreaDao;
 use BancoIdeias\model\Usuario;
 use Illuminate\Database\Capsule\Manager as DB;
 
@@ -22,6 +23,7 @@ class UsuarioController
         $return = $dao->insert(
             array(
                 "codigo" => null,
+                "login"   => request()->get('login'),
                 "nome"   => request()->get('nome'),
                 "area"   => request()->get('area'),
                 "pontos" => request()->get('pontos'),
@@ -62,6 +64,7 @@ class UsuarioController
                 'codigo', '=', $codigo
             ),
             array(
+                "login"   => request()->get('login'),
                 "nome"   => request()->get('nome'),
                 "area"   => request()->get('area'),
                 "pontos" => request()->get('pontos'),
@@ -74,7 +77,13 @@ class UsuarioController
 
     public function add(Application $app)
     {
-        return view()->render('usuario/usuarioform.twig');
+        $dao = new AreaDao();
+        $areas = $dao->find();
+
+        return view()->render(
+            'usuario/usuarioform.twig',
+            ['areas' => $areas]
+        );
     }
 
     public function all(Application $app)
@@ -93,6 +102,7 @@ class UsuarioController
                 )
             )
         );
+
         return view()->render(
             'usuario/usuario.twig',
             ['usuarios' => $usuarios]

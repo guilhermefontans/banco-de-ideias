@@ -9,6 +9,7 @@ namespace BancoIdeias\model;
 class Usuario
 {
     private $codigo;
+    private $login;
     private $nome;
     private $area;
     private $pontos;
@@ -142,5 +143,25 @@ class Usuario
     public function setSenha($senha)
     {
         $this->senha = $senha;
+    }
+
+    /**
+     * Get login.
+     *
+     * @return login.
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * Set login.
+     *
+     * @param login the value to set.
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
     }
 }
