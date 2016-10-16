@@ -1,4 +1,5 @@
 <?php
+
 namespace BancoIdeias\controller;
 
 use Silex\Application;
@@ -9,7 +10,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 /**
  * Class LoginController
- * @author yourname
+ * @author Guilherme
  */
 class UsuarioController
 {
@@ -17,7 +18,7 @@ class UsuarioController
     {
         $dao = new UsuarioDao();
         $admin = false;
-        if (request()->get('isadmin')){
+        if (request()->get('isadmin')) {
              $admin = true;
         }
         $return = $dao->insert(
@@ -44,9 +45,11 @@ class UsuarioController
         $usuarioDB = $dao->byId($codigo);
         $usuario = new Usuario();
         $usuario->mount($usuarioDB);
+        $dao = new AreaDao();
+        $areas = $dao->find();
         return view()->render(
             'usuario/usuarioform.twig',
-            ['usuario' => $usuario]
+            ['usuario' => $usuario, 'areas' => $areas]
         );
     }
 
@@ -55,7 +58,7 @@ class UsuarioController
         $dao = new UsuarioDao();
 
         $admin = false;
-        if (request()->get('isadmin')){
+        if (request()->get('isadmin')) {
              $admin = true;
         }
 

@@ -98,6 +98,7 @@ abstract class Dao
             ->select(
                 $parameters['fields'][0],
                 $parameters['fields'][1])
+            ->orderBy('nome')
             ->get();
 
     }
