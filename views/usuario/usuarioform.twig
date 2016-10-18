@@ -41,6 +41,9 @@
 
                         <select class="form-control" name="area">
                         {% if usuario is null %}
+                            {% for area in areas %}
+                                <option value ="{{area.codigo}}">{{area.nome}}</option>
+                            {% endfor %}
                         {% else %}
                             {% for area in areas %}
                                 {% if area.codigo == usuario.area %}

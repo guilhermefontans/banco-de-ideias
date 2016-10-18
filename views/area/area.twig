@@ -11,32 +11,36 @@
     </a>
 </p>
 
-<table class="table table-striped table-bordered table-hover table-condensed">
-    <tr>
-        <th>#</th>
-        <th>Nome</th>
-        <th>Descrição</th>
-        <th>Ações</th>
-    </tr>
-        {% for area in areas %}
-        <tr>
-            <td>{{area.codigo}}</td>
-            <td>{{area.nome}}</td>
-            <td>{{area.descricao}}</td>
-            <td>
-                <a href="{{app.url_base}}area/alterar/{{area.codigo}}">
-                    <div class="btn btn-default">Alterar</div>
-                </a>
-                <a href="{{app.url_base}}area/delete/{{area.codigo}}">
-                    <div class="btn btn-danger">Excluir</div>
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-</table>
-<p>
-    <a class="btn btn-primary" href="{{app.url_base}}relatorio">
-        Relatório em PDF
-    </a>
-</p>
+<div class="panel panel-primary">
+    <div class="panel-heading">Lista de Prêmios Cadastrados</div>
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+                {% for area in areas %}
+                <tr>
+                    <td>{{area.codigo}}</td>
+                    <td>{{area.nome}}</td>
+                    <td>{{area.descricao}}</td>
+                    <td>
+                        <a href="{{app.url_base}}area/alterar/{{area.codigo}}">
+                            <div class="btn btn-default">Alterar</div>
+                        </a>
+                        <a href="{{app.url_base}}area/delete/{{area.codigo}}">
+                            <div class="btn btn-danger">Excluir</div>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+    </div>
+    <p>
+        <a class="btn btn-primary" href="{{app.url_base}}relatorio">
+            Relatório em PDF
+        </a>
+    </p>
+</div>
 {% endblock %}
