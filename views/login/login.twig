@@ -5,13 +5,19 @@
 <div class="col-xs-8col-xs-offset-2 col-md-4 col-md-offset-4">
 
     <form class="form-signin" action="{{app.url_base}}login/verify" method="POST">
-    <label for="login" class="sr-only">login</label>
-    <input type="text" id="login" name="login" class="form-control" placeholder="Login" required=true autofocus="">
-    <br>
-    <label for="inputPassword" class="sr-only">senha</label>
-    <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required="">
+        {% if app.my_session.has('error') %}
+        <div class="alert alert-danger">
+            {{app.my_session.flash('error')}}
+        </div>
+        {% endif %}
 
-    <button class="btn btn-lg btn-primary btn-block" name="btnOperacao" type="submit">Entrar</button>
+        <label for="login" class="sr-only">login</label>
+        <input type="text" id="login" name="login" class="form-control" placeholder="Login" required=true autofocus="">
+        <br>
+        <label for="inputPassword" class="sr-only">senha</label>
+        <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required="">
+
+        <button class="btn btn-lg btn-primary btn-block" name="btnOperacao" type="submit">Entrar</button>
     </form>
 </div>
 {% endblock %}

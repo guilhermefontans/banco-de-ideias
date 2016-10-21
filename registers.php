@@ -27,7 +27,7 @@ $app['url_public'] = URL_PUBLIC;
 $app['url_auth'] = URL_AUTH;
 
 // Helper para uso de Session
-#$app['my_session'] =  new Stox\Helpers\Session('TREINAWEB');
+$app['my_session'] =  new BancoIdeias\helpers\Session('BANCODEIDEIAS');
 
 
 // Registro para funcionar o Iluminate\Database
@@ -76,7 +76,8 @@ function request() {
     global $app;
     return $app['request'];
 }
-#function session() {
-#    global $app;
-#    return $app['my_session'];
-#}
+
+function session() {
+    global $app;
+    return $app['my_session'];
+}
