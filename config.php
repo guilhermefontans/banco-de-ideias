@@ -13,7 +13,7 @@ define('URL_BASE', 'http://bancodeideias.com.br/');
 define('URL_PUBLIC', '/public');
 
 // URL que necessita estar autenticado
-//define('URL_AUTH', 'http://localhost/stox/auth');
+define('URL_AUTH', 'http://bancodeideias.com.br/auth/');
 
 /**
  * Constantes de conexão com o Database

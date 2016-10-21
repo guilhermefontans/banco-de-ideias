@@ -2,6 +2,8 @@
 
 use BancoIdeias\auth\Auth;
 
+$auth = $app['controllers_factory'];
+
 require __DIR__ . '/rotas/area.php';
 require __DIR__ . '/rotas/login.php';
 require __DIR__ . '/rotas/usuario.php';
@@ -16,12 +18,12 @@ $app->get('/logout', function() use ($app){
     Auth::logout();
     return $app->redirect(URL_BASE);
 });
-#
-$app->before(function () use ($app) {
-    if (!Auth::validate()) {
-        /* return $app->redirect(URL_BASE); */
+
+$auth->before(function() use ($app) {
+    if ($_SESSION['userName'] === null) {
+        return $app->redirect(URL_BASE);
     }
 });
-#
+
 #// Monta as urls em 'auth/'
-#$app->mount('auth', $auth);
+$app->mount('auth', $auth);
