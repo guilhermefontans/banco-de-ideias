@@ -5,4 +5,4 @@ $ctrl = BancoIdeias\controller\LoginController::class;
 
 $app->post('/', "$ctrl::index");
 $app->post('/login/verify', "$ctrl::login");
-$app->get('/home', "$ctrl::home");
+$auth->get('/home', "$ctrl::home");

@@ -27,7 +27,7 @@ class LoginController
                 session()->set('userName', $user->getNome());
                 session()->set('userType', $userDao[0]->isadmin);
                 $auth->grant();
-                return $app->redirect(URL_BASE . 'home');
+                return $app->redirect(URL_AUTH . 'home');
             }
         }
         session()->set('error', 'Usuário ou senha inválido');

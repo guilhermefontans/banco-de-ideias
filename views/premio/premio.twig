@@ -6,7 +6,7 @@
 </div>
 
 <p>
-    <a class="btn btn-primary" href="{{app.url_base}}premio/add">
+    <a class="btn btn-primary" href="{{app.url_auth}}premio/add">
         NOVO PRÊMIO
     </a>
 </p>
@@ -25,10 +25,10 @@
                     <td>{{premio.nome}}</td>
                     <td>{{premio.pontos}}</td>
                     <td>
-                        <a href="{{app.url_base}}premio/alterar/{{premio.codigo}}">
+                        <a href="{{app.url_auth}}premio/alterar/{{premio.codigo}}">
                             <div class="btn btn-default">Alterar</div>
                         </a>
-                        <a href="{{app.url_base}}premio/delete/{{premio.codigo}}">
+                        <a href="{{app.url_auth}}premio/delete/{{premio.codigo}}">
                             <div class="btn btn-danger">Excluir</div>
                         </a>
                     </td>
@@ -37,7 +37,7 @@
         </table>
     </div>
     <p>
-        <a class="btn btn-primary" href="{{app.url_base}}relatorio">
+        <a class="btn btn-primary" href="{{app.url_auth}}relatorio">
             Relatório em PDF
         </a>
     </p>

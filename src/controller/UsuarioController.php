@@ -36,7 +36,7 @@ class UsuarioController
             )
         );
 
-        return $app->redirect(URL_BASE . 'usuario');
+        return $app->redirect(URL_AUTH . 'usuario');
     }
 
     public function alterar(Application $app, $codigo)
@@ -75,7 +75,7 @@ class UsuarioController
             )
         );
 
-        return $app->redirect(URL_BASE . 'usuario');
+        return $app->redirect(URL_AUTH . 'usuario');
     }
 
     public function add(Application $app)
@@ -116,6 +116,6 @@ class UsuarioController
     {
         $dao = new UsuarioDao();
         $dao->delete(array('codigo', '=', $codigo));
-        return $app->redirect(URL_BASE . 'usuario');
+        return $app->redirect(URL_AUTH . 'usuario');
     }
 }

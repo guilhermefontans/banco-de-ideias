@@ -30,10 +30,10 @@
                     <td>{{usuario.area}}</td>
                     <td>{{usuario.pontos}}</td>
                     <td>
-                        <a href="{{app.url_base}}usuario/alterar/{{usuario.codigo}}">
+                        <a href="{{app.url_auth}}usuario/alterar/{{usuario.codigo}}">
                             <div class="btn btn-default">Alterar</div>
                         </a>
-                        <a href="{{app.url_base}}usuario/delete/{{usuario.codigo}}">
+                        <a href="{{app.url_auth}}usuario/delete/{{usuario.codigo}}">
                             <div class="btn btn-danger">Excluir</div>
                         </a>
                     </td>
@@ -42,7 +42,7 @@
         </table>
     </div>
     <p>
-        <a class="btn btn-primary" href="{{app.url_base}}relatorio">
+        <a class="btn btn-primary" href="{{app.url_auth}}relatorio">
             Relatório em PDF
         </a>
     </p>

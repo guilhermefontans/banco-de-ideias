@@ -22,7 +22,7 @@ class PremioController
             )
         );
 
-        return $app->redirect(URL_BASE . 'premio');
+        return $app->redirect(URL_AUTH . 'premio');
     }
 
     public function alterar(Application $app, $codigo)
@@ -47,7 +47,7 @@ class PremioController
             )
         );
 
-        return $app->redirect(URL_BASE . 'premio');
+        return $app->redirect(URL_AUTH . 'premio');
     }
 
     public function add(Application $app)
@@ -66,6 +66,6 @@ class PremioController
     {
         $dao = new PremioDao();
         $dao->delete(array('codigo', '=', $codigo));
-        return $app->redirect(URL_BASE . 'premio');
+        return $app->redirect(URL_AUTH . 'premio');
     }
 }

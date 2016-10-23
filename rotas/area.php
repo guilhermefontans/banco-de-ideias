@@ -1,9 +1,9 @@
 <?php
 $ctrl = BancoIdeias\controller\AreaController::class;
 
-$app->get('/area', "$ctrl::all");
-$app->get('/area/add', "$ctrl::add");
-$app->get('/area/delete/{codigo}', "$ctrl::delete");
-$app->get('/area/alterar/{codigo}', "$ctrl::alterar");
-$app->post('/area/cadastrar', "$ctrl::cadastrar");
-$app->post('/area/update/{codigo}', "$ctrl::update");
+$auth->get('/area', "$ctrl::all");
+$auth->get('/area/add', "$ctrl::add");
+$auth->get('/area/delete/{codigo}', "$ctrl::delete");
+$auth->get('/area/alterar/{codigo}', "$ctrl::alterar");
+$auth->post('/area/cadastrar', "$ctrl::cadastrar");
+$auth->post('/area/update/{codigo}', "$ctrl::update");

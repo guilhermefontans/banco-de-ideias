@@ -5,7 +5,6 @@ namespace BancoIdeias\controller;
 use Silex\Application;
 use BancoIdeias\model\AreaDao;
 use BancoIdeias\model\Area;
-use Illuminate\Database\Capsule\Manager as DB;
 
 /**
  * Class LoginController
@@ -24,7 +23,7 @@ class AreaController
             )
         );
 
-        return $app->redirect(URL_BASE . 'area');
+        return $app->redirect(URL_AUTH . 'area');
     }
 
     public function alterar(Application $app, $codigo)
@@ -49,7 +48,7 @@ class AreaController
             )
         );
 
-        return $app->redirect(URL_BASE . 'area');
+        return $app->redirect(URL_AUTH . 'area');
     }
 
     public function add(Application $app)
@@ -68,6 +67,6 @@ class AreaController
     {
         $dao = new AreaDao();
         $dao->delete(array('codigo', '=', $codigo));
-        return $app->redirect(URL_BASE . 'area');
+        return $app->redirect(URL_AUTH . 'area');
     }
 }
