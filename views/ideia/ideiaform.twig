@@ -1,0 +1,104 @@
+{% extends 'template.twig' %}
+
+{% block content %}
+    {% if ideia is not defined %}
+        {% set ideia = null %}
+    {% endif %}
+    <div class="page-header">
+        <h3>
+            {% if ideia is not null %}
+                Alteração
+                {% set action='ideia/update/' ~ ideia.codigo %}
+            {% else %}
+                Cadastro
+                {% set action='ideia/cadastrar' %}
+            {% endif %}
+            de Ideias
+        </h3>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Nome:</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="nome" {% if ideia %} value="{{ideia.nome}}" {% endif %} class="form-control" placeholder="Nome">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Descrição:</label>
+                    <div class="col-sm-8">
+                        <textarea name="nome" rows="10" {% if ideia %} value="{{ideia.descricao}}" {% endif %} class="form-control" placeholder="Descreva sua ideia aqui..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Área:</label>
+                    <div class="col-sm-8">
+                        {% set option="" %}
+                        {% set optionSelected="" %}
+
+                        <select class="form-control" name="area">
+                        {% if ideia is null %}
+                            {% for area in areas %}
+                                <option value ="{{area.codigo}}">{{area.nome}}</option>
+                            {% endfor %}
+                        {% else %}
+                            {% for area in areas %}
+                                {% if area.codigo == ideia.area %}
+                                    {% set optionSelected = "<option value =\"" ~ area.codigo ~"\">" ~ area.nome ~ "</option>" %}
+                                {% endif %}
+                                    {% set option = option ~ "<option value =\"" ~ area.codigo ~"\">" ~ area.nome ~ "</option>" %}
+                            {% endfor %}
+                                {% autoescape %}
+                                    {{ optionSelected|raw }}
+                                    {{ option|raw }}
+                                {% endautoescape %}
+                        {% endif %}
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="form-group"> -->
+                <!--     <label class="col-sm-2 control-label">Status:</label> -->
+                <!--     <div class="col-sm-8"> -->
+                <!--         {% set option="" %} -->
+                <!--         {% set optionSelected="" %} -->
+
+                <!--         <select class="form-control" name="status"> -->
+                <!--         {% if ideia is null %} -->
+                <!--             {% for area in areas %} -->
+                <!--                 <option value ="{{area.codigo}}">{{area.nome}}</option> -->
+                <!--             {% endfor %} -->
+                <!--         {% else %} -->
+
+                <!--             {% for area in areas %} -->
+                <!--                 {% if area.codigo == ideia.area %} -->
+                <!--                     {% set optionSelected = "<option value =\"" ~ area.codigo ~"\">" ~ area.nome ~ "</option>" %} -->
+                <!--                 {% endif %} -->
+                <!--                     {% set option = option ~ "<option value =\"" ~ area.codigo ~"\">" ~ area.nome ~ "</option>" %} -->
+                <!--             {% endfor %} -->
+                <!--                 {% autoescape %} -->
+                <!--                     {{ optionSelected|raw }} -->
+                <!--                     {{ option|raw }} -->
+                <!--                 {% endautoescape %} -->
+                <!--         {% endif %} -->
+                <!--         </select> -->
+                <!--     </div> -->
+                <!-- </div> -->
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <button type="submit" class="btn btn-default">
+                            {% if ideia is not null %}
+                                Alterar
+                            {% else %}
+                                Cadastrar
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
