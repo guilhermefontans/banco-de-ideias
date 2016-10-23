@@ -6,7 +6,6 @@ use Silex\Application;
 use BancoIdeias\model\UsuarioDao;
 use BancoIdeias\model\AreaDao;
 use BancoIdeias\model\Usuario;
-use Illuminate\Database\Capsule\Manager as DB;
 
 /**
  * Class LoginController

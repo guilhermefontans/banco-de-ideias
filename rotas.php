@@ -8,6 +8,7 @@ require __DIR__ . '/rotas/area.php';
 require __DIR__ . '/rotas/login.php';
 require __DIR__ . '/rotas/usuario.php';
 require __DIR__ . '/rotas/premio.php';
+require __DIR__ . '/rotas/ideia.php';
 
 // verificar a session
 $app->get('/', function(){
