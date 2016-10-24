@@ -8,11 +8,21 @@ use BancoIdeias\model\AreaDao;
 use BancoIdeias\model\Ideia;
 
 /**
- * Class LoginController
- * @author Guilherme
- */
+* Class LoginController
+*
+* @author Guilherme <guilherme.fontans@gmail.com>
+*
+*/
 class IdeiaController
 {
+
+    /**
+    * Register new Ideia
+    *
+    * @param Application $app application silex
+    *
+    * @return url
+    */
     public function cadastrar(Application $app)
     {
         $dao = new IdeiaDao();
@@ -31,6 +41,14 @@ class IdeiaController
         return $app->redirect(URL_AUTH . 'ideia');
     }
 
+    /**
+    * Render form to update Ideia
+    *
+    * @param Application $app    application silex
+    * @param int         $codigo code of Ideia
+    *
+    * @return url
+    */
     public function alterar(Application $app, $codigo)
     {
         $dao = new IdeiaDao();
@@ -46,10 +64,19 @@ class IdeiaController
         );
     }
 
+    /**
+    * Update Ideia
+    *
+    * @param Application $app    application silex
+    * @param int         $codigo code of Ideia
+    *
+    * @return url
+    */
     public function update(Application $app, $codigo)
     {
         $dao = new IdeiaDao();
-        
+        $ideiaDb = new Ideia();
+        $ideiaDb->mount($dao->byId($codigo));
         $return = $dao->update(
             array(
                 'codigo', '=', $codigo
@@ -58,15 +85,22 @@ class IdeiaController
                 "descricao"   => request()->get('descricao'),
                 "nome"   => request()->get('nome'),
                 "area"   => request()->get('area'),
-                "usuario" => request()->get('usuario'),
+                "usuario" => $ideiaDb->getUsuario(),
                 "status" => request()->get('status'),
-                "data" => request()->get('data')
+                "data" => $ideiaDb->getData()
             )
         );
 
         return $app->redirect(URL_AUTH . 'ideia');
     }
 
+    /**
+    * Render form to Ideia
+    *
+    * @param Application $app application silex
+    *
+    * @return url
+    */
     public function add(Application $app)
     {
         $dao = new AreaDao();
@@ -79,6 +113,13 @@ class IdeiaController
         );
     }
 
+    /**
+    * Get all ideias
+    *
+    * @param Application $app application silex
+    *
+    * @return url
+    */
     public function all(Application $app)
     {
         $dao = new IdeiaDao();
@@ -106,6 +147,15 @@ class IdeiaController
         );
     }
 
+
+    /**
+    * Delete ideia
+    *
+    * @param Application $app    application silex
+    * @param int         $codigo code of Ideia
+    *
+    * @return url
+    */
     public function delete(Application $app, $codigo)
     {
         $dao = new IdeiaDao();
