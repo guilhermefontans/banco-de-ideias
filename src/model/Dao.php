@@ -88,20 +88,24 @@ abstract class Dao
         }
     }
 
-    public function join($parameters = array()) {
+    public function join($parameters = array())
+    {
         return DB::table($this->tableName)
             ->join(
                 $parameters['join'][0],
                 $parameters['join'][1],
                 '=',
-                $parameters['join'][2])
+                $parameters['join'][2]
+            )
             ->select(
                 $parameters['fields'][0],
-                $parameters['fields'][1])
+                $parameters['fields'][1]
+            )
             ->orderBy('nome')
             ->get();
 
     }
+
     public function delete($filter = false)
     {
         try{

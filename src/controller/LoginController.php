@@ -25,6 +25,7 @@ class LoginController
             $user->mount($userDao[0]);
             if ($auth->login(request()->get('senha'), $user->getSenha())) {
                 session()->set('userName', $user->getNome());
+                session()->set('userCodigo', $user->getCodigo());
                 session()->set('userType', $userDao[0]->isadmin);
                 $auth->grant();
                 return $app->redirect(URL_AUTH . 'home');

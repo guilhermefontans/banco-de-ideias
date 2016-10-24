@@ -16,22 +16,15 @@ class IdeiaController
     public function cadastrar(Application $app)
     {
         $dao = new IdeiaDao();
-        $admin = false;
-        if (request()->get('isadmin')) {
-             $admin = true;
-        }
         $return = $dao->insert(
             array(
                 "codigo" => null,
-                "login"   => request()->get('login'),
                 "nome"   => request()->get('nome'),
+                "descricao"   => request()->get('descricao'),
                 "area"   => request()->get('area'),
-                "pontos" => request()->get('pontos'),
-                "isadmin" => $admin,
-                "senha" => password_hash(
-                    request()->get('senha'),
-                    PASSWORD_BCRYPT
-                )
+                "usuario"   => session()->get('userCodigo'),
+                "status"   => request()->get('status'),
+                "data"   => date("Y-m-d H:i:s")
             )
         );
 
@@ -46,31 +39,28 @@ class IdeiaController
         $ideia->mount($ideiaDB);
         $dao = new AreaDao();
         $areas = $dao->find();
+        $statusIdeia = ['Nova', 'Em Analise', 'Aceita', 'Cancelada'];
         return view()->render(
             'ideia/ideiaform.twig',
-            ['ideia' => $ideia, 'areas' => $areas]
+            ['ideia' => $ideia, 'areas' => $areas, 'statusIdeia' => $statusIdeia]
         );
     }
 
     public function update(Application $app, $codigo)
     {
         $dao = new IdeiaDao();
-
-        $admin = false;
-        if (request()->get('isadmin')) {
-             $admin = true;
-        }
-
+        
         $return = $dao->update(
             array(
                 'codigo', '=', $codigo
             ),
             array(
-                "login"   => request()->get('login'),
+                "descricao"   => request()->get('descricao'),
                 "nome"   => request()->get('nome'),
                 "area"   => request()->get('area'),
-                "pontos" => request()->get('pontos'),
-                "isadmin" => $admin
+                "usuario" => request()->get('usuario'),
+                "status" => request()->get('status'),
+                "data" => request()->get('data')
             )
         );
 
@@ -81,26 +71,31 @@ class IdeiaController
     {
         $dao = new AreaDao();
         $areas = $dao->find();
+        $statusIdeia = ['Nova', 'Em Analise', 'Aceita', 'Cancelada'];
 
         return view()->render(
             'ideia/ideiaform.twig',
-            ['areas' => $areas]
+            ['areas' => $areas, 'statusIdeia' => $statusIdeia]
         );
     }
 
     public function all(Application $app)
     {
         $dao = new IdeiaDao();
-        $ideias = $dao->join(
+        $ideias = $dao->all(
             array(
                 'join' => array(
-                    'area',
+                    'ideia',
                     'area.codigo',
-                    'ideia.area'
+                    'ideia.area',
+                    'usuario',
+                    'usuario.codigo',
+                    'ideia.usuario',
                 ),
                 'fields' => array(
                     'ideia.*',
-                    'area.nome AS area'
+                    'area.nome AS area',
+                    'usuario.nome AS usuario'
                 )
             )
         );
