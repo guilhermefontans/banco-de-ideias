@@ -90,20 +90,25 @@ abstract class Dao
 
     public function join($parameters = array())
     {
-        return DB::table($this->tableName)
-            ->join(
-                $parameters['join'][0],
-                $parameters['join'][1],
-                '=',
-                $parameters['join'][2]
-            )
-            ->select(
-                $parameters['fields'][0],
-                $parameters['fields'][1]
-            )
-            ->orderBy('nome')
-            ->get();
-
+        try{
+            DB::beginTransaction();
+            return DB::table($this->tableName)
+                ->join(
+                    $parameters['join'][0],
+                    $parameters['join'][1],
+                    '=',
+                    $parameters['join'][2]
+                )
+                ->select(
+                    $parameters['fields'][0],
+                    $parameters['fields'][1]
+                )
+                ->orderBy('nome')
+                ->get();
+        } catch (Exception $ex){
+            DB::rollback();
+            throw $ex;
+        }
     }
 
     public function delete($filter = false)

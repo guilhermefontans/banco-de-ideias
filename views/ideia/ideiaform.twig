@@ -67,9 +67,7 @@
 
                         <select class="form-control" name="status">
                         {% if ideia is null %}
-                            {% for status in statusIdeia %}
-                                <option value ="{{status}}">{{status}}</option>
-                            {% endfor %}
+                            <option value ="Nova">Nova</option>
                         {% else %}
 
                             {% for status in statusIdeia %}

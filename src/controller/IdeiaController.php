@@ -4,8 +4,11 @@ namespace BancoIdeias\controller;
 
 use Silex\Application;
 use BancoIdeias\model\IdeiaDao;
+use BancoIdeias\model\IdeiaBo;
 use BancoIdeias\model\AreaDao;
+use BancoIdeias\model\UsuarioDao;
 use BancoIdeias\model\Ideia;
+use BancoIdeias\model\Usuario;
 
 /**
 * Class LoginController
@@ -25,16 +28,32 @@ class IdeiaController
     */
     public function cadastrar(Application $app)
     {
-        $dao = new IdeiaDao();
-        $return = $dao->insert(
+        $ideiaDao = new IdeiaDao();
+        $usuarioDao = new UsuarioDao();
+        $usuario = new Usuario();
+        $usuario->mount($usuarioDao->byId(session()->get('userCodigo')));
+        $ideiaDao->insert(
             array(
                 "codigo" => null,
                 "nome"   => request()->get('nome'),
                 "descricao"   => request()->get('descricao'),
                 "area"   => request()->get('area'),
-                "usuario"   => session()->get('userCodigo'),
+                "usuario"   => $usuario->getCodigo(),
                 "status"   => request()->get('status'),
                 "data"   => date("Y-m-d H:i:s")
+            )
+        );
+        $a = IdeiaBo::getPontosToIdeia('Nova');
+        $usuarioDao->update(
+            array(
+                'codigo', '=', $usuario->getCodigo()
+            ),
+            array(
+                "pontos" => $usuario
+                    ->getPontos() + IdeiaBO::getPontosToIdeia(
+                        request()
+                        ->get('status')
+                    )
             )
         );
 
@@ -57,7 +76,7 @@ class IdeiaController
         $ideia->mount($ideiaDB);
         $dao = new AreaDao();
         $areas = $dao->find();
-        $statusIdeia = ['Nova', 'Em Analise', 'Aceita', 'Cancelada'];
+        $statusIdeia = ['Nova', 'Em Analise', 'Aceita', 'Encerrada'];
         return view()->render(
             'ideia/ideiaform.twig',
             ['ideia' => $ideia, 'areas' => $areas, 'statusIdeia' => $statusIdeia]
@@ -105,11 +124,10 @@ class IdeiaController
     {
         $dao = new AreaDao();
         $areas = $dao->find();
-        $statusIdeia = ['Nova', 'Em Analise', 'Aceita', 'Cancelada'];
 
         return view()->render(
             'ideia/ideiaform.twig',
-            ['areas' => $areas, 'statusIdeia' => $statusIdeia]
+            ['areas' => $areas]
         );
     }
 

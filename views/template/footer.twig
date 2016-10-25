@@ -10,5 +10,18 @@
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="{{app.url_public}}/js/bootstrap.min.js"></script>
         <script src="{{app.url_public}}/js/vendor/holder.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function (){
+               $(function() {
+               $("li").click(function() {
+                     // remove classes from all
+                     $("li").removeClass("active");
+                     // add class to the one we clicked
+                     $(this).addClass("active");
+                  });
+                });
+            });
+        </script>
+
         </body>
 </html>

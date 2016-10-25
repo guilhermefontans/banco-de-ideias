@@ -22,6 +22,7 @@
                 <th>Usuário</th>
                 <th>Status</th>
                 <th>Data</th>
+                <th>Ações</th>
             </tr>
                 {% for ideia in ideias %}
                 <tr>
@@ -34,10 +35,10 @@
                     <td>{{ideia.data}}</td>
                     <td>
                         <a href="{{app.url_auth}}ideia/alterar/{{ideia.codigo}}">
-                            <div class="btn btn-default">Alterar</div>
+                            <image src="{{app.url_public}}/imagens/editar.png" title="Editar"></image>
                         </a>
                         <a href="{{app.url_auth}}ideia/delete/{{ideia.codigo}}">
-                            <div class="btn btn-danger">Excluir</div>
+                            <image src="{{app.url_public}}/imagens/excluir.png" title="Excluir"></image>
                         </a>
                     </td>
                 </tr>
