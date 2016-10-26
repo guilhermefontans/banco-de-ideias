@@ -7,19 +7,45 @@
         </div>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="{{app.url_public}}/js/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <!-- <script src="{{app.url_public}}/js/vendor/holder.min.js"></script> -->
         <script src="{{app.url_public}}/js/bootstrap.min.js"></script>
-        <script src="{{app.url_public}}/js/vendor/holder.min.js"></script>
+
+        <!-- Jquery Table -->
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.jqueryui.min.js"></script>
+
+        <!-- Table -->
+        <!-- <script src="{{app.url_public}}/js/data-table.js"></script> -->
         <script type="text/javascript">
             $(document).ready(function (){
-               $(function() {
-               $("li").click(function() {
-                     // remove classes from all
-                     $("li").removeClass("active");
-                     // add class to the one we clicked
-                     $(this).addClass("active");
-                  });
-                });
+                $('#table-usuario').DataTable(
+                    {
+                        "language" : {
+                            "decimal":        "",
+                            "emptyTable":     "Sem dados disponíveis na tabela",
+                            "info":           "Mostrando _START_ até _END_ def _TOTAL_ registros",
+                            "infoEmpty":      "Mostrando 0 até 0 de 0 registros",
+                            "infoFiltered":   "(Filtrado de _MAX_ total de registros)",
+                            "infoPostFix":    "",
+                            "thousands":      ",",
+                            "lengthMenu":     "Mostrando _MENU_ registros",
+                            "loadingRecords": "Carregando...",
+                            "processing":     "Processando...",
+                            "search":         "Pesquisar:",
+                            "zeroRecords":    "Nenhum registro corresponde a pesquisa",
+                            "paginate": {
+                                    "first":      "Primeiro",
+                                    "last":       "Último",
+                                    "next":       "Próximo",
+                                    "previous":   "Anterior"
+                                },
+                            "aria": {
+                                    "sortAscending":  ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                            }
+                        }
+                    }
+                );
             });
         </script>
 
