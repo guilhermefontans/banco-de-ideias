@@ -17,11 +17,28 @@ class IdeiaBo
         } else if ($status == 'Em Analise') {
             $pontos = 5;
         } else if ($status == 'Aceita') {
-            $pontos = 5;
-        } else if ($status == 'Excluida') {
-            $pontos = -1;
+            $pontos = 10;
         }
 
         return $pontos;
+    }
+
+    public static function getArrayStatus($status)
+    {
+        $array;
+        if ($status == 'Nova') {
+            $array = ['Nova', 'Em Analise', 'Aceita', 'Encerrada'];
+        } else if ($status != 'Nova') {
+            $array = ['Em Analise', 'Aceita', 'Encerrada'];
+        }
+        return $array;
+    }
+
+    public static function getPontosToIdeiaExclude($status)
+    {
+        if ($status == "Nova") {
+            return 1;
+        }
+        return 0;
     }
 }

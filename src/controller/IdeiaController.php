@@ -43,7 +43,6 @@ class IdeiaController
                 "data"   => date("Y-m-d H:i:s")
             )
         );
-        $a = IdeiaBo::getPontosToIdeia('Nova');
         $usuarioDao->update(
             array(
                 'codigo', '=', $usuario->getCodigo()
@@ -76,7 +75,8 @@ class IdeiaController
         $ideia->mount($ideiaDB);
         $dao = new AreaDao();
         $areas = $dao->find();
-        $statusIdeia = ['Nova', 'Em Analise', 'Aceita', 'Encerrada'];
+        $statusIdeia = IdeiaBo::getArrayStatus($ideia->getStatus());
+
         return view()->render(
             'ideia/ideiaform.twig',
             ['ideia' => $ideia, 'areas' => $areas, 'statusIdeia' => $statusIdeia]
@@ -94,9 +94,12 @@ class IdeiaController
     public function update(Application $app, $codigo)
     {
         $dao = new IdeiaDao();
+        $usuarioDao = new UsuarioDao();
         $ideiaDb = new Ideia();
         $ideiaDb->mount($dao->byId($codigo));
-        $return = $dao->update(
+        $usuario = new Usuario();
+        $usuario->mount($usuarioDao->byId($ideiaDb->getUsuario()));
+        $dao->update(
             array(
                 'codigo', '=', $codigo
             ),
@@ -107,6 +110,19 @@ class IdeiaController
                 "usuario" => $ideiaDb->getUsuario(),
                 "status" => request()->get('status'),
                 "data" => $ideiaDb->getData()
+            )
+        );
+
+        $usuarioDao->update(
+            array(
+                'codigo', '=', $usuario->getCodigo()
+            ),
+            array(
+                "pontos" => $usuario
+                    ->getPontos() + IdeiaBO::getPontosToIdeia(
+                        request()
+                        ->get('status')
+                    )
             )
         );
 
@@ -177,7 +193,26 @@ class IdeiaController
     public function delete(Application $app, $codigo)
     {
         $dao = new IdeiaDao();
+
+        $ideiaDb = $dao->byId($codigo);
+        $ideia = new Ideia();
+        $ideia->mount($ideiaDb);
+        $usuarioDao = new UsuarioDao();
+        $usuario = new Usuario();
+        $usuario->mount($usuarioDao->byId($ideia->getUsuario()));
         $dao->delete(array('codigo', '=', $codigo));
+        $usuarioDao->update(
+            array(
+                'codigo', '=', $usuario->getCodigo()
+            ),
+            array(
+                "pontos" => $usuario
+                    ->getPontos() - IdeiaBO::getPontosToIdeiaExclude(
+                      $ideia->getStatus()
+                    )
+            )
+        );
+
         return $app->redirect(URL_AUTH . 'ideia');
     }
 }
