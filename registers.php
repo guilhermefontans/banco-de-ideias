@@ -10,7 +10,7 @@ use Illuminate\Database\Capsule\Manager as DB;
  * Registra informações do Twig(Template Engine)
  */
 $app->register(new Silex\Provider\TwigServiceProvider, [
-    'twig.path' => __DIR__ . '/views'
+    'twig.path' => __DIR__ . '/src/views'
 ]);
 
 $app->register(new Silex\Provider\MonologServiceProvider(), array(

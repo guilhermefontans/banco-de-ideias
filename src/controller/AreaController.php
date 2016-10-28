@@ -15,7 +15,7 @@ class AreaController
     public function cadastrar(Application $app)
     {
         $dao = new AreaDao();
-        $return = $dao->insert(
+        $dao->insert(
             array(
                 "codigo" => null,
                 "nome"   => request()->get('nome'),
