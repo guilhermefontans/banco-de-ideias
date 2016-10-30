@@ -30,4 +30,12 @@ class Auth
     {
         session()->destroy();
     }
+
+    public static function isAdmin()
+    {
+        if (!session()->get('userType')) {
+            return false;
+        }
+        return true;
+    }
 }

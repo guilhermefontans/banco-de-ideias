@@ -4,24 +4,30 @@ namespace BancoIdeias\controller;
 use Silex\Application;
 use BancoIdeias\model\PremioDao;
 use BancoIdeias\model\Premio;
-use Illuminate\Database\Capsule\Manager as DB;
+use BancoIdeias\model\PremioBo;
+
 /**
- * Class LoginController
- * @author yourname
+ * Class PremioController
+ * @author Guilherme Fontans <guilherme.fontans@gmail.com>
  */
 class PremioController
 {
     public function cadastrar(Application $app)
     {
-        $dao = new PremioDao();
-        $return = $dao->insert(
-            array(
-                "codigo" => null,
-                "nome"   => request()->get('nome'),
-                "pontos" => request()->get('pontos')
-            )
-        );
-
+        try {
+            PremioBo::validate();
+            $dao = new PremioDao();
+            $dao->insert(
+                array(
+                    "codigo" => null,
+                    "nome"   => request()->get('nome'),
+                    "pontos" => request()->get('pontos')
+                )
+            );
+        } catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'premio/add');
+        }
         return $app->redirect(URL_AUTH . 'premio');
     }
 

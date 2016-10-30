@@ -21,7 +21,13 @@ $app->get('/logout', function() use ($app){
 });
 
 $auth->before(function() use ($app) {
-    if ($_SESSION['userName'] === null) {
+    if (!Auth::validate()) {
+        return $app->redirect(URL_BASE);
+    }
+});
+
+$auth->before(function() use ($app) {
+    if (!Auth::isAdmin()) {
         return $app->redirect(URL_BASE);
     }
 });

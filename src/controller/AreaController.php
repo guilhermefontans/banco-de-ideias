@@ -1,27 +1,39 @@
 <?php
-
+/**
+ * Controller Area
+ */
 namespace BancoIdeias\controller;
 
 use Silex\Application;
 use BancoIdeias\model\AreaDao;
 use BancoIdeias\model\Area;
+use BancoIdeias\model\AreaBo;
 
 /**
- * Class LoginController
- * @author yourname
+ * Class AreaController
+ *
+ * @category 
+ * @package  Controller
+ * @author   Guilherme Fontans <guilherme.fontans@gmail.com>
  */
 class AreaController
 {
     public function cadastrar(Application $app)
     {
-        $dao = new AreaDao();
-        $dao->insert(
-            array(
-                "codigo" => null,
-                "nome"   => request()->get('nome'),
-                "descricao" => request()->get('descricao')
-            )
-        );
+        try{
+            AreaBo::validate();
+            $dao = new AreaDao();
+            $dao->insert(
+                array(
+                    "codigo" => null,
+                    "nome"   => request()->get('nome'),
+                    "descricao" => request()->get('descricao')
+                )
+            );
+        } catch (\Exception $ex){
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'area/add');
+        }
 
         return $app->redirect(URL_AUTH . 'area');
     }
@@ -60,7 +72,7 @@ class AreaController
     {
         $dao = new AreaDao();
         $areas = $dao->find();
-        return view()->render('area/area.twig',['areas' => $areas]);
+        return view()->render('area/area.twig', ['areas' => $areas]);
     }
 
     public function delete(Application $app, $codigo)

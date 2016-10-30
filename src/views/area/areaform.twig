@@ -17,14 +17,13 @@
             de Área
         </h3>
     </div>
-    {% if app.my_session.has('error') %}
-        <div class="alert alert-danger">
-            {{app.my_session.flash('error')}}
-        </div>
-    {% endif %}
-
     <div class="row">
         <div class="col-md-8">
+            {% if app.my_session.has('error') %}
+                <div class="alert alert-danger">
+                    {{app.my_session.flash('error')}}
+                </div>
+            {% endif %}
             <form class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Nome:</label>

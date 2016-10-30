@@ -6,19 +6,24 @@
     {% endif %}
     <div class="page-header">
         <h3>
-            {% if premio is not null %} 
+            {% if premio is not null %}
                 Alteração
                 {% set action='premio/update/' ~ premio.codigo %}
             {% else %}
                 Cadastro
                 {% set action='premio/cadastrar' %}
-            {% endif %} 
+            {% endif %}
             de Prêmio
         </h3>
     </div>
 
     <div class="row">
         <div class="col-md-8">
+            {% if app.my_session.has('error') %}
+                <div class="alert alert-danger">
+                    {{app.my_session.flash('error')}}
+                </div>
+            {% endif %}
             <form class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Nome:</label>
