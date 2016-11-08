@@ -7,18 +7,18 @@
         </div>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="{{app.url_public}}/js/jquery.min.js"></script>
-        <!-- <script src="{{app.url_public}}/js/vendor/holder.min.js"></script> -->
         <script src="{{app.url_public}}/js/bootstrap.min.js"></script>
+        <script src="{{app.url_public}}/js/jquery.validate.min.js"></script>
+        <script src="{{app.url_public}}/js/validate.js"></script>
 
         <!-- Jquery Table -->
-        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.jqueryui.min.js"></script>
+        <script src="{{app.url_public}}/js/jquery-data-table.js"></script>
+        <script src="{{app.url_public}}/js/data-table-jqueryui.js"></script>
 
-        <!-- Table -->
-        <!-- <script src="{{app.url_public}}/js/data-table.js"></script> -->
         <script type="text/javascript">
             $(document).ready(function (){
-                $('#table-usuario').DataTable(
+                validate(this);
+                $('#table-view').DataTable(
                     {
                         "language" : {
                             "decimal":        "",
@@ -48,6 +48,5 @@
                 );
             });
         </script>
-
         </body>
 </html>

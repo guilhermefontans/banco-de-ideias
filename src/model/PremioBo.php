@@ -10,7 +10,7 @@ class PremioBo
 {
     public static function validate()
     {
-        if (strlen(request()->get('nome')) << 2
+        if (strlen(request()->get('nome')) < 2
             || is_numeric(request()->get('nome'))
             || empty(request()->get('nome'))
         ) {

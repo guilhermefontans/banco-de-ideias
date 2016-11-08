@@ -24,7 +24,7 @@
                     {{app.my_session.flash('error')}}
                 </div>
             {% endif %}
-            <form class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
+            <form id="premio-form" class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Nome:</label>
                     <div class="col-sm-8">

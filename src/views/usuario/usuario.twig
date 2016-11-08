@@ -1,18 +1,23 @@
 {% extends 'template.twig' %}
 
 {% block content %}
-<div class="page-header">
-    <h3>Usuários</h3>
-</div>
-<p>
-    <a class="btn btn-primary" href="{{app.url_auth}}usuario/add">
-        NOVO USUÁRIO
-    </a>
-</p>
-<div class="panel">
-    <!-- Default panel contents -->
-    <!-- <div class="panel-heading">Lista de Usuários Cadastrados</div> -->
-        <table id="table-usuario" class="display">
+    <div class="page-header">
+        <h3>Usuários</h3>
+    </div>
+    <p>
+        <a class="btn btn-primary" href="{{app.url_auth}}usuario/add">
+            NOVO USUÁRIO
+        </a>
+    </p>
+    <div class="panel panel-primary">
+        {% if app.my_session.has('error') %}
+            <div class="alert alert-danger">
+                {{app.my_session.flash('error')}}
+            </div>
+        {% endif %}
+        <!-- Default panel contents -->
+        <div class="panel-heading">Lista de Usuários Cadastrados</div>
+        <table id="table-view" class="display">
             <thead>
                 <tr>
                     <th>#</th>
@@ -20,7 +25,7 @@
                     <th>Login</th>
                     <th>Área</th>
                     <th>Pontos</th>
-                    <th class="centered">Ações</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tfoot>
@@ -35,21 +40,21 @@
             </tfoot>
             <tbody>
                 {% for usuario in usuarios %}
-                <tr>
-                    <td>{{usuario.codigo}}</td>
-                    <td>{{usuario.nome}}</td>
-                    <td>{{usuario.login}}</td>
-                    <td>{{usuario.area}}</td>
-                    <td>{{usuario.pontos}}</td>
-                    <td>
-                        <a href="{{app.url_auth}}usuario/alterar/{{usuario.codigo}}">
-                            <image src="{{app.url_public}}/imagens/editar.png" title="Editar"></image>
-                        </a>
-                        <a href="{{app.url_auth}}usuario/delete/{{usuario.codigo}}">
-                            <image src="{{app.url_public}}/imagens/excluir.png" title="Excluir"></image>
-                        </a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{usuario.codigo}}</td>
+                        <td>{{usuario.nome}}</td>
+                        <td>{{usuario.login}}</td>
+                        <td>{{usuario.area}}</td>
+                        <td>{{usuario.pontos}}</td>
+                        <td>
+                            <a href="{{app.url_auth}}usuario/alterar/{{usuario.codigo}}">
+                                <image src="{{app.url_public}}/imagens/editar.png" title="Editar"></image>
+                            </a>
+                            <a href="{{app.url_auth}}usuario/delete/{{usuario.codigo}}">
+                                <image src="{{app.url_public}}/imagens/excluir.png" title="Excluir"></image>
+                            </a>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>

@@ -19,13 +19,19 @@
     {% endif %}
 
     <div class="panel-heading">Lista de Prêmios Cadastrados</div>
-        <table class="table table-striped table-bordered table-hover table-condensed">
-            <tr>
+    <table id="table-view" class="display">
+            <thead>
                 <th>#</th>
                 <th>Prêmio</th>
                 <th>Pontos</th>
                 <th>Ações</th>
-            </tr>
+            </thead>
+            <tfoot>
+                <th>#</th>
+                <th>Prêmio</th>
+                <th>Pontos</th>
+                <th>Ações</th>
+            </tfoot>
                 {% for premio in premios %}
                 <tr>
                     <td>{{premio.codigo}}</td>

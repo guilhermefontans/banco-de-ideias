@@ -1,33 +1,39 @@
 {% extends 'template.twig' %}
 
 {% block content %}
-<div class="page-header">
-    <h3>Áreas</h3>
-</div>
-
-<p>
-    <a class="btn btn-primary" href="{{app.url_auth}}area/add">
-        NOVA ÁREA
-    </a>
-</p>
-
-<div class="panel panel-primary">
-
-    {% if app.my_session.has('error') %}
-    <div class="alert alert-danger">
-        {{app.my_session.flash('error')}}
+    <div class="page-header">
+        <h3>Áreas</h3>
     </div>
-    {% endif %}
-
-    <div class="panel-heading">Lista de Áreas Cadastradas</div>
-        <table class="table table-striped table-bordered table-hover table-condensed">
-            <tr>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Ações</th>
-            </tr>
-                {% for area in areas %}
+    <p>
+        <a class="btn btn-primary" href="{{app.url_auth}}area/add">
+            NOVA ÁREA
+        </a>
+    </p>
+    <div class="panel panel-primary">
+        {% if app.my_session.has('error') %}
+            <div class="alert alert-danger">
+                {{app.my_session.flash('error')}}
+            </div>
+        {% endif %}
+        <div class="panel-heading">Lista de Áreas Cadastradas</div>
+        <table id="table-view" class="display">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Ações</th>
+                </tr>
+            </tfoot>
+            {% for area in areas %}
                 <tr>
                     <td>{{area.codigo}}</td>
                     <td>{{area.nome}}</td>
@@ -41,7 +47,7 @@
                         </a>
                     </td>
                 </tr>
-                {% endfor %}
+            {% endfor %}
         </table>
     </div>
     <p>

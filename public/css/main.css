@@ -7,11 +7,18 @@ body {
   padding-top: 50px;
 }
 
+/* Error message */
+label.error {
+    foat: none;
+    color: red;
+    margin: 0 .5em 0 0;
+    vertical-align: top;
+    font-size: 12px;
+}
 
 /*
  * Global add-ons
  */
-
 .sub-header {
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;

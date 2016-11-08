@@ -1,20 +1,25 @@
 {% extends 'template.twig' %}
 
 {% block content %}
-<div class="page-header">
-    <h3>Ideias</h3>
-</div>
+    <div class="page-header">
+        <h3>Ideias</h3>
+    </div>
 
-<p>
-    <a class="btn btn-primary" href="{{app.url_auth}}ideia/add">
-        NOVA IDEIA
-    </a>
-</p>
-<div class="panel panel-primary">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Lista de Ideias Cadastrados</div>
-        <table class="table table-striped table-bordered table-hover table-condensed">
-            <tr>
+    <p>
+        <a class="btn btn-primary" href="{{app.url_auth}}ideia/add">
+            NOVA IDEIA
+        </a>
+    </p>
+    <div class="panel panel-primary">
+        {% if app.my_session.has('error') %}
+            <div class="alert alert-danger">
+                {{app.my_session.flash('error')}}
+            </div>
+        {% endif %}
+        <!-- Default panel contents -->
+        <div class="panel-heading">Lista de Ideias Cadastradas</div>
+        <table id="table-view" class="display">
+            <thead>
                 <th>#</th>
                 <th>Nome</th>
                 <th>Descrição</th>
@@ -23,8 +28,18 @@
                 <th>Status</th>
                 <th>Data</th>
                 <th>Ações</th>
-            </tr>
-                {% for ideia in ideias %}
+            </thead>
+            <tfoot>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Área</th>
+                <th>Usuário</th>
+                <th>Status</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tfoot>
+            {% for ideia in ideias %}
                 <tr>
                     <td>{{ideia.codigo}}</td>
                     <td>{{ideia.nome}}</td>
@@ -42,7 +57,7 @@
                         </a>
                     </td>
                 </tr>
-                {% endfor %}
+            {% endfor %}
         </table>
     </div>
     <p>
