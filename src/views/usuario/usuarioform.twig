@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="ajax-status"></div>
-            <form id="usuario" class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
+            <form id="usuario-form" class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Login:</label>
                     <div class="col-sm-8">
@@ -70,7 +70,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Senha:</label>
                         <div class="col-sm-8">
-                            <input type="password" required maxlength="62" name="senha" {% if usuario %} value="{{ usuario.pontos }}" {% endif %} class="form-control" placeholder="Senha">
+                            <input id="senha" type="password" required maxlength="62" name="senha" {% if usuario %} value="{{ usuario.senha }}" {% endif %} class="form-control" placeholder="Senha">
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Confirmar Senha:</label>
                         <div class="col-sm-8">
-                            <input type="password" required maxlength="62" {% if usuario %} value="{{ usuario.pontos }}" {% endif %} class="form-control" placeholder="Senha">
+                            <input type="password" id="confirmaSenha" name="confirmaSenha" required maxlength="62" {% if usuario %} value="{{ usuario.senha }}" {% endif %} class="form-control" placeholder="Senha">
                         </div>
                     </div>
                 </div>

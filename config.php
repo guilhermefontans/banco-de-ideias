@@ -25,3 +25,4 @@ define('USER', 'root');
 define('PASS', 'root');
 define('PORT', 3306);
 define('CHARSET', 'UTF8');
+define('DSN', DRIVER . ':host='. HOST.';port='.PORT.';dbname='.DB.';charset='.CHARSET);
