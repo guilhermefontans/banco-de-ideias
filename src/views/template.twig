@@ -3,15 +3,17 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
-                  <ul class="nav nav-sidebar">
+                  <!-- <ul class="nav nav-sidebar"> -->
+                  <ul class="nav nav-pills nav-stacked">
                     <!-- <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li> -->
-                    <li><a href="{{app.url_auth}}home">Home</a></li>
+                    <li><a href="{{app.url_auth}}home"> Home <span class="glyphicon glyphicon-home"></span></a></li>
                     <li><a href="{{app.url_auth}}ideia">Ideia</a></li>
                     <li><a href="{{app.url_auth}}premio">Prêmio</a></li>
                     <li><a href="{{app.url_auth}}area">Área</a></li>
-                    <li><a href="{{app.url_auth}}usuario">Usuário</a></li>
+                    <li><span class="glyphicon glyphicon-user"><a href="{{app.url_auth}}usuario"> Usuário</a></span></li>
                   </ul>
                 </div>
+                <div class="btn-group-vertical" role="group">
             </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             {% block content %}{% endblock %}

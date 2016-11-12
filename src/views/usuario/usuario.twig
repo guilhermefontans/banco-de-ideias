@@ -47,12 +47,8 @@
                         <td>{{usuario.area}}</td>
                         <td>{{usuario.pontos}}</td>
                         <td>
-                            <a href="{{app.url_auth}}usuario/alterar/{{usuario.codigo}}">
-                                <image src="{{app.url_public}}/imagens/editar.png" title="Editar"></image>
-                            </a>
-                            <a href="{{app.url_auth}}usuario/delete/{{usuario.codigo}}">
-                                <image src="{{app.url_public}}/imagens/excluir.png" title="Excluir"></image>
-                            </a>
+                            <a href="{{app.url_auth}}usuario/alterar/{{usuario.codigo}}" class="btn btn-success center-block"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a href="{{app.url_auth}}usuario/delete/{{usuario.codigo}}" class="btn btn-danger center-block"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
                 {% endfor %}
