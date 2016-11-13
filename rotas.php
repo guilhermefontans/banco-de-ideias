@@ -26,11 +26,18 @@ $auth->before(function() use ($app) {
     }
 });
 
-/* $auth->before(function() use ($app) { */
-/*     if (!Auth::isAdmin()) { */
-/*         return $app->redirect(URL_BASE); */
-/*     } */
-/* }); */
+//Verifica se usurario tem permissão de edição
+$auth->before(function() use ($app) {
+    if (!Auth::isAdmin()) {
+        $pattern = '/(add|delete|alterar|update)/';
+        preg_match($pattern, $_SERVER['REQUEST_URI'], $matches);
+
+        $app['monolog']->addInfo(print_r($matches, true));
+        if($matches){
+            return $app->redirect(URL_RESTRICT);
+        }
+    }
+});
 
 #// Monta as urls em 'auth/'
 $app->mount('auth', $auth);

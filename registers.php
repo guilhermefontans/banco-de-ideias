@@ -56,13 +56,6 @@ unset($capsule);
 #    return new Knp\Snappy\Pdf($exe);
 #};
 
-/**
- * Regitra Classe Helper de Formulario
- */
-#$app['html'] = $app->share(function (){
-#    return new Stox\Helpers\FormFields;
-#});
-
 /** 
  * Function Helper
  * Chamada do Twig nos Controllers

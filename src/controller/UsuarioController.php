@@ -117,4 +117,9 @@ class UsuarioController
         $dao->delete(array('codigo', '=', $codigo));
         return $app->redirect(URL_AUTH . 'usuario');
     }
+
+    public function restrict(Application $app)
+    {
+        return view()->render('pages/restrict.twig');
+    }
 }

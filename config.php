@@ -15,6 +15,8 @@ define('URL_PUBLIC', '/public');
 // URL que necessita estar autenticado
 define('URL_AUTH', 'http://bancodeideias.com.br/auth/');
 
+// URL para exibir tela de acesso restrito
+define('URL_RESTRICT', 'http://bancodeideias.com.br/auth/restrict/');
 /**
  * Constantes de conexão com o Database
  */
