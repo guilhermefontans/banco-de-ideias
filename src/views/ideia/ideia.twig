@@ -4,12 +4,9 @@
     <div class="page-header">
         <h3>Ideias</h3>
     </div>
-
-    <p>
-        <a class="btn btn-primary" href="{{app.url_auth}}ideia/add">
-            NOVA IDEIA
-        </a>
-    </p>
+    {% set action = app.url_auth ~ "ideia/add" %}
+    {% set destination = "IDEIA" %}
+    {%include 'template/buttonAdd.twig'%}
     <div class="panel panel-primary">
         {% if app.my_session.has('error') %}
             <div class="alert alert-danger">
@@ -18,7 +15,7 @@
         {% endif %}
         <!-- Default panel contents -->
         <div class="panel-heading">Lista de Ideias Cadastradas</div>
-        <table id="table-view" class="display">
+        <table id="table-view" class="display cell-border">
             <thead>
                 <th>#</th>
                 <th>Nome</th>
@@ -27,18 +24,10 @@
                 <th>Usuário</th>
                 <th>Status</th>
                 <th>Data</th>
-                <th>Ações</th>
+                {%if app.my_session.get('userType') == true%}
+                    <th>Ações</th>
+                {%endif%}
             </thead>
-            <tfoot>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Área</th>
-                <th>Usuário</th>
-                <th>Status</th>
-                <th>Data</th>
-                <th>Ações</th>
-            </tfoot>
             {% for ideia in ideias %}
                 <tr>
                     <td>{{ideia.codigo}}</td>
@@ -48,14 +37,12 @@
                     <td>{{ideia.usuario}}</td>
                     <td>{{ideia.status}}</td>
                     <td>{{ideia.data}}</td>
-                    <td>
-                        <a href="{{app.url_auth}}ideia/alterar/{{ideia.codigo}}">
-                            <image src="{{app.url_public}}/imagens/editar.png" title="Editar"></image>
-                        </a>
-                        <a href="{{app.url_auth}}ideia/delete/{{ideia.codigo}}">
-                            <image src="{{app.url_public}}/imagens/excluir.png" title="Excluir"></image>
-                        </a>
-                    </td>
+                    {%if app.my_session.get('userType') == true%}
+                        <td>
+                            <a href="{{app.url_auth}}ideia/alterar/{{ideia.codigo}}" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="{{app.url_auth}}ideia/delete/{{ideia.codigo}}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    {%endif%}
                 </tr>
             {% endfor %}
         </table>

@@ -87,13 +87,17 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-6">
-                        <button type="submit" class="btn btn-default">
+                        <button type="submit" class="btn btn-primary">
                             {% if ideia is not null %}
                                 Alterar
                             {% else %}
                                 Cadastrar
                             {% endif %}
+                            <span class="glyphicon glyphicon-floppy-save"></span>
                         </button>
+                        <a type="submit" class="btn btn-primary" href="{{app.url_auth}}ideia">Cancelar
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                        </a>
                     </div>
                 </div>
             </form>

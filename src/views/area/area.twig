@@ -4,11 +4,9 @@
     <div class="page-header">
         <h3>Áreas</h3>
     </div>
-    <p>
-        <a class="btn btn-primary" href="{{app.url_auth}}area/add">
-            NOVA ÁREA
-        </a>
-    </p>
+    {% set action = app.url_auth ~ "area/add" %}
+    {% set destination = "ÁREA" %}
+    {%include 'template/buttonAdd.twig'%}
     <div class="panel panel-primary">
         {% if app.my_session.has('error') %}
             <div class="alert alert-danger">
@@ -16,36 +14,28 @@
             </div>
         {% endif %}
         <div class="panel-heading">Lista de Áreas Cadastradas</div>
-        <table id="table-view" class="display">
+        <table id="table-view" class="display cell-border">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Nome</th>
                     <th>Descrição</th>
-                    <th>Ações</th>
+                    {%if app.my_session.get('userType') == true%}
+                        <th>Ações</th>
+                    {%endif%}
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Ações</th>
-                </tr>
-            </tfoot>
             {% for area in areas %}
                 <tr>
                     <td>{{area.codigo}}</td>
                     <td>{{area.nome}}</td>
                     <td>{{area.descricao}}</td>
-                    <td>
-                        <a href="{{app.url_auth}}area/alterar/{{area.codigo}}">
-                            <image src="{{app.url_public}}/imagens/editar.png" title="Editar"></image>
-                        </a>
-                        <a href="{{app.url_auth}}area/delete/{{area.codigo}}">
-                            <image src="{{app.url_public}}/imagens/excluir.png" title="Excluir"></image>
-                        </a>
-                    </td>
+                    {%if app.my_session.get('userType') == true%}
+                        <td>
+                            <a href="{{app.url_auth}}area/alterar/{{area.codigo}}" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="{{app.url_auth}}area/delete/{{area.codigo}}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    {%endif%}
                 </tr>
             {% endfor %}
         </table>

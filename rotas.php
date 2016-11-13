@@ -26,11 +26,11 @@ $auth->before(function() use ($app) {
     }
 });
 
-$auth->before(function() use ($app) {
-    if (!Auth::isAdmin()) {
-        return $app->redirect(URL_BASE);
-    }
-});
+/* $auth->before(function() use ($app) { */
+/*     if (!Auth::isAdmin()) { */
+/*         return $app->redirect(URL_BASE); */
+/*     } */
+/* }); */
 
 #// Monta as urls em 'auth/'
 $app->mount('auth', $auth);

@@ -1,52 +1,43 @@
 {% extends 'template.twig' %}
 
 {% block content %}
-<div class="page-header">
-    <h3>Prêmios</h3>
-</div>
-
-<p>
-    <a class="btn btn-primary" href="{{app.url_auth}}premio/add">
-        NOVO PRÊMIO
-    </a>
-</p>
-<div class="panel panel-primary">
-
-    {% if app.my_session.has('error') %}
-    <div class="alert alert-danger">
-        {{app.my_session.flash('error')}}
+    <div class="page-header">
+        <h3>Prêmios</h3>
     </div>
-    {% endif %}
+    {% set action = app.url_auth ~ "premio/add" %}
+    {% set destination = "PRÊMIO" %}
+    {%include 'template/buttonAdd.twig'%}
+    <div class="panel panel-primary">
 
-    <div class="panel-heading">Lista de Prêmios Cadastrados</div>
-    <table id="table-view" class="display">
+        {% if app.my_session.has('error') %}
+            <div class="alert alert-danger">
+                {{app.my_session.flash('error')}}
+            </div>
+        {% endif %}
+
+        <div class="panel-heading">Lista de Prêmios Cadastrados</div>
+        <table id="table-view" class="display cell-border">
             <thead>
                 <th>#</th>
                 <th>Prêmio</th>
                 <th>Pontos</th>
-                <th>Ações</th>
+                {%if app.my_session.get('userType') == true%}
+                    <th>Ações</th>
+                {%endif%}
             </thead>
-            <tfoot>
-                <th>#</th>
-                <th>Prêmio</th>
-                <th>Pontos</th>
-                <th>Ações</th>
-            </tfoot>
-                {% for premio in premios %}
+            {% for premio in premios %}
                 <tr>
                     <td>{{premio.codigo}}</td>
                     <td>{{premio.nome}}</td>
                     <td>{{premio.pontos}}</td>
-                    <td>
-                        <a href="{{app.url_auth}}premio/alterar/{{premio.codigo}}">
-                            <image src="{{app.url_public}}/imagens/editar.png" title="Editar"></image>
-                        </a>
-                        <a href="{{app.url_auth}}premio/delete/{{premio.codigo}}">
-                            <image src="{{app.url_public}}/imagens/excluir.png" title="Excluir"></image>
-                        </a>
-                    </td>
+                    {%if app.my_session.get('userType') == true%}
+                        <td>
+                            <a href="{{app.url_auth}}premio/alterar/{{premio.codigo}}" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="{{app.url_auth}}premio/delete/{{premio.codigo}}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    {%endif%}
                 </tr>
-                {% endfor %}
+            {% endfor %}
         </table>
     </div>
     <p>
