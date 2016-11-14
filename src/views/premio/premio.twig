@@ -7,13 +7,21 @@
     {% set action = app.url_auth ~ "premio/add" %}
     {% set destination = "PRÊMIO" %}
     {%include 'template/buttonAdd.twig'%}
-    <div class="panel panel-primary">
 
-        {% if app.my_session.has('error') %}
+    {% if app.my_session.has('error') %}
             <div class="alert alert-danger">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                 {{app.my_session.flash('error')}}
             </div>
         {% endif %}
+
+        {% if app.my_session.has('info') %}
+            <div class="alert alert-success">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                {{app.my_session.flash('info')}}
+            </div>
+        {% endif %}
+    <div class="panel panel-primary">
 
         <div class="panel-heading">Lista de Prêmios Cadastrados</div>
         <table id="table-view" class="display cell-border">
@@ -32,7 +40,7 @@
                     <td>{{premio.nome}}</td>
                     <td>{{premio.pontos}}</td>
                     <td>
-                        <button type="submit" class="btn btn-primary">Solicitar</button>
+                        <a href="{{app.url_auth}}premio/solicitar/{{premio.codigo}}/pontos/{{premio.pontos}}/usuario/{{app.my_session.get('userCodigo')}}" class="btn btn-success btn-block{%if app.my_session.get('pontos') < premio.pontos%}  disabled {%endif%}">Solicitar</a>
                     </td>
                     {%if app.my_session.get('userType') == true%}
                         <td>

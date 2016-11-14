@@ -19,7 +19,7 @@
 -- Current Database: `dbideias`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `dbideias` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `dbideias` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 USE `dbideias`;
 
@@ -35,7 +35,7 @@ CREATE TABLE `area` (
   `nome` varchar(30) DEFAULT NULL,
   `descricao` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `area` (
 
 LOCK TABLES `area` WRITE;
 /*!40000 ALTER TABLE `area` DISABLE KEYS */;
-INSERT INTO `area` VALUES (1,'Suporte','Área responsável pelo suporte técnico'),(2,'Administração','Área responsável pela administração'),(3,'Financeiro','Área respons ável pelas finanças'),(4,'Comercial','Área responsável pelas compras e vendas'),(5,'Desenvolvimento','Área responsável pelo desenvolvimento de softwares'),(6,'ssdsfsdfds','dsfeferferferf'),(7,'sssd','dssdsdsdsdsds');
+INSERT INTO `area` VALUES (1,'Suporte','Área responsável pelo suporte técnico'),(2,'Administração','Área responsável pela administração'),(3,'Financeiro','Área respons ável pelas finanças'),(4,'Comercial','Área responsável pelas compras e vendas'),(5,'Desenvolvimento','Área responsável pelo desenvolvimento de softwares');
 /*!40000 ALTER TABLE `area` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ CREATE TABLE `ideia` (
   KEY `fk_usuario_idx` (`usuario`),
   CONSTRAINT `fk_area` FOREIGN KEY (`area`) REFERENCES `area` (`codigo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`codigo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `premio` (
   `nome` varchar(40) DEFAULT NULL,
   `pontos` int(11) DEFAULT NULL,
   PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,6 +104,33 @@ LOCK TABLES `premio` WRITE;
 /*!40000 ALTER TABLE `premio` DISABLE KEYS */;
 INSERT INTO `premio` VALUES (2,'Tv 42 polegadas',10000),(3,'Microondas',400),(4,'SmartPhone',1000),(5,'Notebook',5000),(6,'Bicicleta',200),(7,'Monitor 21\"',1000),(8,' Mochila',60),(10,'Agenda',10),(12,'Batedeira',140);
 /*!40000 ALTER TABLE `premio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `premio_retirado`
+--
+
+DROP TABLE IF EXISTS `premio_retirado`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `premio_retirado` (
+  `codigo_usuario` int(11) NOT NULL,
+  `codigo_premio` int(11) NOT NULL,
+  `data_retirada` datetime NOT NULL,
+  PRIMARY KEY (`codigo_premio`,`codigo_usuario`,`data_retirada`),
+  KEY `fk_premio_retirado_1_idx` (`codigo_usuario`),
+  CONSTRAINT `fk_premio_retirado_1` FOREIGN KEY (`codigo_usuario`) REFERENCES `usuario` (`codigo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_premio_retirado_2` FOREIGN KEY (`codigo_premio`) REFERENCES `premio` (`codigo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `premio_retirado`
+--
+
+LOCK TABLES `premio_retirado` WRITE;
+/*!40000 ALTER TABLE `premio_retirado` DISABLE KEYS */;
+/*!40000 ALTER TABLE `premio_retirado` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -124,7 +151,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`codigo`),
   KEY `fk_usuario_2_idx` (`area`),
   CONSTRAINT `fk_usuario_2` FOREIGN KEY (`area`) REFERENCES `area` (`codigo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +160,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (31,'admin','Admin','$2y$10$O4xZuXN1DdUA2hDvAKqrQ.3agYutqG/CjxB.nlM7/NYB4mRWMrUYO',1,5,55),(39,'guilherme','Guilherme','$2y$10$Hv4kJggIkNy3Ch/vFpvmT.6R9V0ZPgGJl2rpgwUHhpHQeJyxEHvZ6',1,5,1027),(47,'operador','operador','$2y$10$P3MyBAg.oTDUu6bqB3NKIOSbh7akclWk4yEu.iQMWvwNkBc1.MLuC',0,2,2);
+INSERT INTO `usuario` VALUES (31,'admin','Admin','$2y$10$O4xZuXN1DdUA2hDvAKqrQ.3agYutqG/CjxB.nlM7/NYB4mRWMrUYO',1,5,980),(39,'guilherme','Guilherme','$2y$10$Hv4kJggIkNy3Ch/vFpvmT.6R9V0ZPgGJl2rpgwUHhpHQeJyxEHvZ6',1,5,1027),(40,'operador','operador','$2y$10$PK0BJcOfKXhJba4bb625q.e0sr7a4Q5hO12.T78WNj679LeyUaQaa',0,1,3);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -146,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-10  0:03:07
+-- Dump completed on 2016-11-14  0:09:07

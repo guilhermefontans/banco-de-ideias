@@ -8,3 +8,4 @@ $auth->get('/usuario/delete/{codigo}', "$ctrl::delete");
 $auth->get('/usuario/alterar/{codigo}', "$ctrl::alterar");
 $auth->post('/usuario/cadastrar', "$ctrl::cadastrar");
 $auth->post('/usuario/update/{codigo}', "$ctrl::update");
+$auth->get('/premio/solicitar/{codigoPremio}/pontos/{pontos}/usuario/{codigoUsuario}', "$ctrl::solicitarPremio");

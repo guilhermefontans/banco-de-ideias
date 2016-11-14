@@ -27,6 +27,8 @@ class LoginController
                 session()->set('userName', $user->getNome());
                 session()->set('userCodigo', $user->getCodigo());
                 session()->set('userType', $userDao[0]->isadmin);
+                session()->set('pontos', $userDao[0]->pontos);
+                $app['monolog']->addInfo(print_r($_SESSION, true));
                 $auth->grant();
                 return $app->redirect(URL_AUTH . 'home');
             }

@@ -10,6 +10,7 @@
         <script src="{{app.url_public}}/bootstrap/js/bootstrap.min.js"></script>
         <script src="{{app.url_public}}/js/jquery.validate.min.js"></script>
         <script src="{{app.url_public}}/js/validate.js"></script>
+        <script src="{{app.url_public}}/js/active.js"></script>
 
         <!-- Jquery Table -->
         <script src="{{app.url_public}}/js/jquery-data-table.js"></script>
@@ -18,6 +19,7 @@
         <script type="text/javascript">
             $(document).ready(function (){
                 validate(this);
+                actived(this);
                 $('#table-view').DataTable(
                     {
                         "language" : {

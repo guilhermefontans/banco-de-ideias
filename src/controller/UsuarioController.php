@@ -4,6 +4,8 @@ namespace BancoIdeias\controller;
 
 use Silex\Application;
 use BancoIdeias\model\UsuarioDao;
+use BancoIdeias\model\PremioDao;
+use BancoIdeias\model\PremioRetiradoDao;
 use BancoIdeias\model\AreaDao;
 use BancoIdeias\model\Usuario;
 
@@ -61,7 +63,7 @@ class UsuarioController
              $admin = true;
         }
 
-        $return = $dao->update(
+        $dao->update(
             array(
                 'codigo', '=', $codigo
             ),
@@ -121,5 +123,39 @@ class UsuarioController
     public function restrict(Application $app)
     {
         return view()->render('pages/restrict.twig');
+    }
+
+    public static function atualizarPontosInSession($codigoUsuario)
+    {
+        $usuarioDao = new UsuarioDao();
+        $userDao = $usuarioDao->byId($codigoUsuario);
+        session()->set('pontos', $userDao->pontos);
+    }
+
+    public function solicitarPremio(Application $app, $codigoPremio, $pontos, $codigoUsuario)
+    {
+        $usuarioDao = new UsuarioDao();
+        $userDb = $usuarioDao->byId($codigoUsuario);
+        $user = new Usuario();
+        $user->mount($userDb);
+        $usuarioDao->update(
+            array(
+                'codigo', '=', $codigoUsuario
+            ),
+            array(
+                "pontos"   => $user->getPontos() -  $pontos
+            )
+
+        );
+        $premioRetiradoDao = new PremioRetiradoDao();
+        $premioRetiradoDao->insert(
+            array(
+                "codigo_usuario" => $codigoUsuario,
+                "codigo_premio" => $codigoPremio,
+                "data_retirada"   => date('Y-m-d H:i:s')
+            )
+        );
+        session()->set('info', 'Prêmio solicitado com sucesso!');
+        return $app->redirect(URL_AUTH . 'premio');
     }
 }

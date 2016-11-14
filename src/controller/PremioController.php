@@ -3,6 +3,7 @@ namespace BancoIdeias\controller;
 
 use Silex\Application;
 use BancoIdeias\model\PremioDao;
+use BancoIdeias\controller\UsarioController;
 use BancoIdeias\model\Premio;
 use BancoIdeias\model\PremioBo;
 
@@ -63,6 +64,9 @@ class PremioController
 
     public function all(Application $app)
     {
+        $codigo = session()->get('userCodigo');
+        $app['monolog']->addInfo($codigo);
+        UsuarioController::atualizarPontosInSession($codigo);
         $dao = new PremioDao();
         $premios = $dao->find();
         return view()->render('premio/premio.twig',['premios' => $premios]);

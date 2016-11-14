@@ -3,14 +3,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
-                  <!-- <ul class="nav nav-sidebar"> -->
                   <ul class="nav nav-pills nav-stacked">
-                    <!-- <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li> -->
-                    <li><a href="{{app.url_auth}}home"> Home <span class="glyphicon glyphicon-home"></span></a></li>
-                    <li><a href="{{app.url_auth}}ideia">Ideia</a></li>
-                    <li><a href="{{app.url_auth}}premio">Prêmio</a></li>
-                    <li><a href="{{app.url_auth}}area">Área</a></li>
-                    <li><a href="{{app.url_auth}}usuario"> Usuário <span class="glyphicon glyphicon-user"></span></a></li>
+                    <li><a id="menuhome" href="{{app.url_auth}}home"><image src="{{app.url_public}}/imagens/home.png"></image> Home </a></li>
+                    <li><a id="menuideia" href="{{app.url_auth}}ideia"><image src="{{app.url_public}}/imagens/lampada.png"></image> Ideia</a></li>
+                    <li><a id="menupremio" href="{{app.url_auth}}premio"><image src="{{app.url_public}}/imagens/medal.png"></image> Prêmio</a></li>
+                    <li><a id="menuarea" href="{{app.url_auth}}area"><image src="{{app.url_public}}/imagens/equip.png"></image> Área</a></li>
+                    <li><a id="menuusuario" href="{{app.url_auth}}usuario"><image src="{{app.url_public}}/imagens/user.png"></image> Usuário </a></li>
                   </ul>
                 </div>
                 <div class="btn-group-vertical" role="group">
