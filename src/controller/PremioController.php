@@ -29,6 +29,7 @@ class PremioController
             session()->set('error', $ex->getMessage());
             return $app->redirect(URL_AUTH . 'premio/add');
         }
+        session()->set('info', 'Prêmio cadastrado com sucesso!'); 
         return $app->redirect(URL_AUTH . 'premio');
     }
 
@@ -43,17 +44,22 @@ class PremioController
 
     public function update(Application $app, $codigo)
     {
-        $dao = new PremioDao();
-        $return = $dao->update(
-            array(
-                'codigo', '=', $codigo
-            ),
-            array(
-                "nome"   => request()->get('nome'),
-                "pontos" => request()->get('pontos')
-            )
-        );
-
+        try{
+            $dao = new PremioDao();
+            $return = $dao->update(
+                array(
+                    'codigo', '=', $codigo
+                ),
+                array(
+                    "nome"   => request()->get('nome'),
+                    "pontos" => request()->get('pontos')
+                )
+            );
+        }catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'premio/add');
+        }
+        session()->set('info', 'Prêmio atualizado com sucesso!'); 
         return $app->redirect(URL_AUTH . 'premio');
     }
 

@@ -9,6 +9,7 @@ use BancoIdeias\model\AreaDao;
 use BancoIdeias\model\UsuarioDao;
 use BancoIdeias\model\Ideia;
 use BancoIdeias\model\Usuario;
+use BancoIdeias\controller\UsuarioController;
 
 /**
 * Class LoginController
@@ -32,6 +33,7 @@ class IdeiaController
         $usuarioDao = new UsuarioDao();
         $usuario = new Usuario();
         $usuario->mount($usuarioDao->byId(session()->get('userCodigo')));
+        $pontosAfterInsert = $usuario->getPontos() + IdeiaBo::getPontosToIdeia(request()->get('status'));
         $ideiaDao->insert(
             array(
                 "codigo" => null,
@@ -44,18 +46,10 @@ class IdeiaController
             )
         );
         $usuarioDao->update(
-            array(
-                'codigo', '=', $usuario->getCodigo()
-            ),
-            array(
-                "pontos" => $usuario
-                    ->getPontos() + IdeiaBO::getPontosToIdeia(
-                        request()
-                        ->get('status')
-                    )
-            )
+            array('codigo', '=', $usuario->getCodigo()),
+            array("pontos" => $pontosAfterInsert)
         );
-
+        session()->set('pontos', $pontosAfterInsert);
         return $app->redirect(URL_AUTH . 'ideia');
     }
 
@@ -99,6 +93,7 @@ class IdeiaController
         $ideiaDb->mount($dao->byId($codigo));
         $usuario = new Usuario();
         $usuario->mount($usuarioDao->byId($ideiaDb->getUsuario()));
+        $pontosAfterInsert = $usuario->getPontos() + IdeiaBo::getPontosToIdeia(request()->get('status'));
         $dao->update(
             array(
                 'codigo', '=', $codigo
@@ -114,18 +109,10 @@ class IdeiaController
         );
 
         $usuarioDao->update(
-            array(
-                'codigo', '=', $usuario->getCodigo()
-            ),
-            array(
-                "pontos" => $usuario
-                    ->getPontos() + IdeiaBO::getPontosToIdeia(
-                        request()
-                        ->get('status')
-                    )
-            )
+            array('codigo', '=', $usuario->getCodigo()),
+            array("pontos" => $pontosAfterInsert)
         );
-
+        session()->set('pontos', $pontosAfterInsert);
         return $app->redirect(URL_AUTH . 'ideia');
     }
 
