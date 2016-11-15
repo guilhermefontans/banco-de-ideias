@@ -84,30 +84,4 @@ class PremioController
         $dao->delete(array('codigo', '=', $codigo));
         return $app->redirect(URL_AUTH . 'premio');
     }
-
-    public function premiosRelatorio()
-    {
-        /* $prods = Produto::all(); */
-        /* return view()->render('produtos/produtos_relat.twig', [ */
-        /*     'produtos' => $prods */
-        /* ]); */
-        return $this->all(Application $app);
-    }
-
-    public function relatorio(Application $app)
-    {
-        $relat = getcwd() . '/public/relatorio.html';
-        file_put_contents($relat, $this->premiosRelatorio());
-
-        $file = function () use ($app, $relat) {
-            echo $app['snappy']->getOutPut(URL_PUBLIC . '/relatorio.html');
-            unlink($relat);
-        };
-        
-        return $app->stream($file, 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="relatorio.pdf"'
-        ]);
-    }
-
 }

@@ -51,10 +51,10 @@ unset($capsule);
 /**
  * Regitra Snappy PDF
  */
-$app['snappy'] = function () {
-    $exe = 'vendor/bin/wkhtmltopdf-amd64';
-    return new Knp\Snappy\Pdf($exe);
-};
+/* $app['snappy'] = function () { */
+/*     $exe = 'vendor/bin/wkhtmltopdf-amd64'; */
+/*     return new Knp\Snappy\Pdf($exe); */
+/* }; */
 
 /** 
  * Function Helper
