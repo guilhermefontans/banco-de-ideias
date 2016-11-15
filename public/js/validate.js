@@ -147,7 +147,7 @@ validate = function(obj) {
 
         }
     })
-    jQuery.validator.addMethod("custom_valid_name",function(value,element){
-        return this.optional(element) || /^([a-z-AZ]+\s?)+$/.test(value);
+    jQuery.validator.addMethod("custom_valid_name",function(value, element){
+        return this.optional(element) || /(^[a-z,A-Z]+\s?)/.test(value);
     },"Nome inválido");
 }
