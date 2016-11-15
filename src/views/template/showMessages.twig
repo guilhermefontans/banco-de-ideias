@@ -1,0 +1,14 @@
+{% if app.my_session.has('error') %}
+    <div class="alert alert-danger">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        {{app.my_session.flash('error')}}
+    </div>
+{% endif %}
+
+{% if app.my_session.has('info') %}
+    <div class="alert alert-success">
+        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+        {{app.my_session.flash('info')}}
+    </div>
+{% endif %}
+

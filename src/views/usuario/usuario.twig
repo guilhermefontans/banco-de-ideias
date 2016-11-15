@@ -7,12 +7,9 @@
     {% set action = app.url_auth ~ "usuario/add" %}
     {% set destination = "USUÁRIO" %}
     {%include 'template/buttonAdd.twig'%}
+    {%include 'template/showMessages.twig'%}
+
     <div class="panel panel-primary">
-        {% if app.my_session.has('error') %}
-            <div class="alert alert-danger">
-                {{app.my_session.flash('error')}}
-            </div>
-        {% endif %}
         <div class="panel-heading">Lista de Usuários Cadastrados</div>
         <table id="table-view" class="display cell-border">
             <thead>
@@ -37,7 +34,7 @@
                     {%if app.my_session.get('userType') == true%}
                         <td>
                             <a href="{{app.url_auth}}usuario/alterar/{{usuario.codigo}}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a href="{{app.url_auth}}usuario/delete/{{usuario.codigo}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a data-toggle="confirmation" href="{{app.url_auth}}usuario/delete/{{usuario.codigo}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     {%endif%}
                 </tr>

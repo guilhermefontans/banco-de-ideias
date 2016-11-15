@@ -29,26 +29,32 @@ class IdeiaController
     */
     public function cadastrar(Application $app)
     {
-        $ideiaDao = new IdeiaDao();
-        $usuarioDao = new UsuarioDao();
-        $usuario = new Usuario();
-        $usuario->mount($usuarioDao->byId(session()->get('userCodigo')));
-        $pontosAfterInsert = $usuario->getPontos() + IdeiaBo::getPontosToIdeia(request()->get('status'));
-        $ideiaDao->insert(
-            array(
-                "codigo" => null,
-                "nome"   => request()->get('nome'),
-                "descricao"   => request()->get('descricao'),
-                "area"   => request()->get('area'),
-                "usuario"   => $usuario->getCodigo(),
-                "status"   => request()->get('status'),
-                "data"   => date("Y-m-d H:i:s")
-            )
-        );
-        $usuarioDao->update(
-            array('codigo', '=', $usuario->getCodigo()),
-            array("pontos" => $pontosAfterInsert)
-        );
+        try{
+            $ideiaDao = new IdeiaDao();
+            $usuarioDao = new UsuarioDao();
+            $usuario = new Usuario();
+            $usuario->mount($usuarioDao->byId(session()->get('userCodigo')));
+            $pontosAfterInsert = $usuario->getPontos() + IdeiaBo::getPontosToIdeia(request()->get('status'));
+            $ideiaDao->insert(
+                array(
+                    "codigo" => null,
+                    "nome"   => request()->get('nome'),
+                    "descricao"   => request()->get('descricao'),
+                    "area"   => request()->get('area'),
+                    "usuario"   => $usuario->getCodigo(),
+                    "status"   => request()->get('status'),
+                    "data"   => date("Y-m-d H:i:s")
+                )
+            );
+            $usuarioDao->update(
+                array('codigo', '=', $usuario->getCodigo()),
+                array("pontos" => $pontosAfterInsert)
+            );
+        } catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'ideia/add');
+        }
+        session()->set('info', 'Ideia cadastrada com sucesso!'); 
         session()->set('pontos', $pontosAfterInsert);
         return $app->redirect(URL_AUTH . 'ideia');
     }
@@ -63,13 +69,18 @@ class IdeiaController
     */
     public function alterar(Application $app, $codigo)
     {
-        $dao = new IdeiaDao();
-        $ideiaDB = $dao->byId($codigo);
-        $ideia = new ideia();
-        $ideia->mount($ideiaDB);
-        $dao = new AreaDao();
-        $areas = $dao->find();
-        $statusIdeia = IdeiaBo::getArrayStatus($ideia->getStatus());
+        try{
+            $dao = new IdeiaDao();
+            $ideiaDB = $dao->byId($codigo);
+            $ideia = new ideia();
+            $ideia->mount($ideiaDB);
+            $dao = new AreaDao();
+            $areas = $dao->find();
+            $statusIdeia = IdeiaBo::getArrayStatus($ideia->getStatus());
+        } catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'ideia');
+        }
 
         return view()->render(
             'ideia/ideiaform.twig',
@@ -87,31 +98,37 @@ class IdeiaController
     */
     public function update(Application $app, $codigo)
     {
-        $dao = new IdeiaDao();
-        $usuarioDao = new UsuarioDao();
-        $ideiaDb = new Ideia();
-        $ideiaDb->mount($dao->byId($codigo));
-        $usuario = new Usuario();
-        $usuario->mount($usuarioDao->byId($ideiaDb->getUsuario()));
-        $pontosAfterInsert = $usuario->getPontos() + IdeiaBo::getPontosToIdeia(request()->get('status'));
-        $dao->update(
-            array(
-                'codigo', '=', $codigo
-            ),
-            array(
-                "descricao"   => request()->get('descricao'),
-                "nome"   => request()->get('nome'),
-                "area"   => request()->get('area'),
-                "usuario" => $ideiaDb->getUsuario(),
-                "status" => request()->get('status'),
-                "data" => $ideiaDb->getData()
-            )
-        );
+        try{
+            $dao = new IdeiaDao();
+            $usuarioDao = new UsuarioDao();
+            $ideiaDb = new Ideia();
+            $ideiaDb->mount($dao->byId($codigo));
+            $usuario = new Usuario();
+            $usuario->mount($usuarioDao->byId($ideiaDb->getUsuario()));
+            $pontosAfterInsert = $usuario->getPontos() + IdeiaBo::getPontosToIdeia(request()->get('status'));
+            $dao->update(
+                array(
+                    'codigo', '=', $codigo
+                ),
+                array(
+                    "descricao"   => request()->get('descricao'),
+                    "nome"   => request()->get('nome'),
+                    "area"   => request()->get('area'),
+                    "usuario" => $ideiaDb->getUsuario(),
+                    "status" => request()->get('status'),
+                    "data" => $ideiaDb->getData()
+                )
+            );
 
-        $usuarioDao->update(
-            array('codigo', '=', $usuario->getCodigo()),
-            array("pontos" => $pontosAfterInsert)
-        );
+            $usuarioDao->update(
+                array('codigo', '=', $usuario->getCodigo()),
+                array("pontos" => $pontosAfterInsert)
+            );
+        } catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'ideia/add');
+        }
+        session()->set('info', 'Ideia atualizada com sucesso!'); 
         session()->set('pontos', $pontosAfterInsert);
         return $app->redirect(URL_AUTH . 'ideia');
     }
@@ -179,26 +196,32 @@ class IdeiaController
     */
     public function delete(Application $app, $codigo)
     {
-        $dao = new IdeiaDao();
+        try{
+            $dao = new IdeiaDao();
 
-        $ideiaDb = $dao->byId($codigo);
-        $ideia = new Ideia();
-        $ideia->mount($ideiaDb);
-        $usuarioDao = new UsuarioDao();
-        $usuario = new Usuario();
-        $usuario->mount($usuarioDao->byId($ideia->getUsuario()));
-        $dao->delete(array('codigo', '=', $codigo));
-        $usuarioDao->update(
-            array(
-                'codigo', '=', $usuario->getCodigo()
-            ),
-            array(
-                "pontos" => $usuario
-                    ->getPontos() - IdeiaBO::getPontosToIdeiaExclude(
-                      $ideia->getStatus()
-                    )
-            )
-        );
+            $ideiaDb = $dao->byId($codigo);
+            $ideia = new Ideia();
+            $ideia->mount($ideiaDb);
+            $usuarioDao = new UsuarioDao();
+            $usuario = new Usuario();
+            $usuario->mount($usuarioDao->byId($ideia->getUsuario()));
+            $dao->delete(array('codigo', '=', $codigo));
+            $usuarioDao->update(
+                array(
+                    'codigo', '=', $usuario->getCodigo()
+                ),
+                array(
+                    "pontos" => $usuario
+                        ->getPontos() - IdeiaBO::getPontosToIdeiaExclude(
+                          $ideia->getStatus()
+                        )
+                )
+            );
+        }catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'ideia');
+        }
+        session()->set('info', 'Ideia apagada com sucesso!'); 
 
         return $app->redirect(URL_AUTH . 'ideia');
     }

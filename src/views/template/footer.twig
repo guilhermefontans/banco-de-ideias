@@ -10,6 +10,7 @@
         <script src="{{app.url_public}}/bootstrap/js/bootstrap.min.js"></script>
         <script src="{{app.url_public}}/js/jquery.validate.min.js"></script>
         <script src="{{app.url_public}}/js/validate.js"></script>
+        <script src="{{app.url_public}}/js/bootstrap-confirmation.js"></script>
         <script src="{{app.url_public}}/js/active.js"></script>
 
         <!-- Jquery Table -->
@@ -20,6 +21,15 @@
             $(document).ready(function (){
                 validate(this);
                 actived(this);
+                $('[data-toggle="confirmation"]').confirmation({
+                     rootSelector: '[data-toggle=confirmation]',
+                     html: "false",
+                     btnOkLabel:"Sim",
+                     btnCancelLabel:"Não",
+                     placement: "left",
+                     title : "Você está certo?",
+                     singleton:"true"
+                });
                 $('#table-view').DataTable(
                     {
                         "language" : {

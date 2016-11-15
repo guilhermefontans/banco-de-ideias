@@ -35,10 +35,15 @@ class PremioController
 
     public function alterar(Application $app, $codigo)
     {
-        $dao = new PremioDao();
-        $premioDB = $dao->byId($codigo);
-        $premio = new Premio();
-        $premio->mount($premioDB);
+        try{
+            $dao = new PremioDao();
+            $premioDB = $dao->byId($codigo);
+            $premio = new Premio();
+            $premio->mount($premioDB);
+        } catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'premio');
+        }
         return view()->render('premio/premioform.twig', ['premio' => $premio]);
     }
 
@@ -80,8 +85,14 @@ class PremioController
 
     public function delete(Application $app, $codigo)
     {
-        $dao = new PremioDao();
-        $dao->delete(array('codigo', '=', $codigo));
+        try{
+            $dao = new PremioDao();
+            $dao->delete(array('codigo', '=', $codigo));
+        }catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'premio');
+        }
+        session()->set('info', 'Prêmio apagado com sucesso!'); 
         return $app->redirect(URL_AUTH . 'premio');
     }
 }

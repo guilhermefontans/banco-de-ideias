@@ -17,37 +17,47 @@ class UsuarioController
 {
     public function cadastrar(Application $app)
     {
-        $dao = new UsuarioDao();
-        $admin = false;
-        if (request()->get('isadmin')) {
-             $admin = true;
-        }
-        $return = $dao->insert(
-            array(
-                "codigo" => null,
-                "login"   => request()->get('login'),
-                "nome"   => request()->get('nome'),
-                "area"   => request()->get('area'),
-                "pontos" => request()->get('pontos'),
-                "isadmin" => $admin,
-                "senha" => password_hash(
-                    request()->get('senha'),
-                    PASSWORD_BCRYPT
+        try{
+            $dao = new UsuarioDao();
+            $admin = false;
+            if (request()->get('isadmin')) {
+                 $admin = true;
+            }
+            $return = $dao->insert(
+                array(
+                    "codigo" => null,
+                    "login"   => request()->get('login'),
+                    "nome"   => request()->get('nome'),
+                    "area"   => request()->get('area'),
+                    "pontos" => request()->get('pontos'),
+                    "isadmin" => $admin,
+                    "senha" => password_hash(
+                        request()->get('senha'),
+                        PASSWORD_BCRYPT
+                    )
                 )
-            )
-        );
-
+            );
+        } catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'usuario/add');
+        }
+        session()->set('info', 'Usuário cadastrado com sucesso!'); 
         return $app->redirect(URL_AUTH . 'usuario');
     }
 
     public function alterar(Application $app, $codigo)
     {
-        $dao = new UsuarioDao();
-        $usuarioDB = $dao->byId($codigo);
-        $usuario = new Usuario();
-        $usuario->mount($usuarioDB);
-        $dao = new AreaDao();
-        $areas = $dao->find();
+        try{
+            $dao = new UsuarioDao();
+            $usuarioDB = $dao->byId($codigo);
+            $usuario = new Usuario();
+            $usuario->mount($usuarioDB);
+            $dao = new AreaDao();
+            $areas = $dao->find();
+        } catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'usuario');
+        }
         return view()->render(
             'usuario/usuarioform.twig',
             ['usuario' => $usuario, 'areas' => $areas]
@@ -56,26 +66,31 @@ class UsuarioController
 
     public function update(Application $app, $codigo)
     {
-        $dao = new UsuarioDao();
+        try{
+            $dao = new UsuarioDao();
 
-        $admin = false;
-        if (request()->get('isadmin')) {
-             $admin = true;
+            $admin = false;
+            if (request()->get('isadmin')) {
+                 $admin = true;
+            }
+
+            $dao->update(
+                array(
+                    'codigo', '=', $codigo
+                ),
+                array(
+                    "login"   => request()->get('login'),
+                    "nome"   => request()->get('nome'),
+                    "area"   => request()->get('area'),
+                    "pontos" => request()->get('pontos'),
+                    "isadmin" => $admin
+                )
+            );
+        } catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'usuario/add');
         }
-
-        $dao->update(
-            array(
-                'codigo', '=', $codigo
-            ),
-            array(
-                "login"   => request()->get('login'),
-                "nome"   => request()->get('nome'),
-                "area"   => request()->get('area'),
-                "pontos" => request()->get('pontos'),
-                "isadmin" => $admin
-            )
-        );
-
+        session()->set('info', 'Usuário alterado com sucesso!'); 
         return $app->redirect(URL_AUTH . 'usuario');
     }
 
@@ -115,8 +130,14 @@ class UsuarioController
 
     public function delete(Application $app, $codigo)
     {
-        $dao = new UsuarioDao();
-        $dao->delete(array('codigo', '=', $codigo));
+        try{
+            $dao = new UsuarioDao();
+            $dao->delete(array('codigo', '=', $codigo));
+        }catch (\Exception $ex) {
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'usuário');
+        }
+        session()->set('info', 'Usuário apagado com sucesso!');
         return $app->redirect(URL_AUTH . 'usuario');
     }
 

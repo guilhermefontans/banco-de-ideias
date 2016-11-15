@@ -19,6 +19,7 @@
 
     <div class="row">
         <div class="col-md-8">
+            {%include 'template/showMessages.twig'%}
             <form id="ideia-form" class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Nome:</label>
@@ -29,7 +30,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Descrição:</label>
                     <div class="col-sm-8">
-                        <textarea name="descricao" rows="10" class="form-control" placeholder="Descreva sua ideia aqui..." required>{% if ideia %} {{ideia.descricao}} {% endif %} </textarea>
+                        <textarea name="descricao" rows="10" class="form-control" placeholder="Descreva sua ideia aqui..." required>{% if ideia %}{{ideia.descricao}}{% endif %}</textarea>
                     </div>
                 </div>
 
@@ -87,11 +88,11 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-6">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary"
                             {% if ideia is not null %}
-                                Alterar
+                               data-toggle="confirmation">Alterar
                             {% else %}
-                                Cadastrar
+                                >Cadastrar
                             {% endif %}
                             <span class="glyphicon glyphicon-floppy-save"></span>
                         </button>
