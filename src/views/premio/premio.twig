@@ -28,7 +28,7 @@
                     <td>{{premio.nome}}</td>
                     <td>{{premio.pontos}}</td>
                     <td>
-                        <a href="{{app.url_auth}}premio/solicitar/{{premio.codigo}}/pontos/{{premio.pontos}}/usuario/{{app.my_session.get('userCodigo')}}" class="btn btn-success btn-block{%if app.my_session.get('pontos') < premio.pontos%}  disabled {%endif%}">Solicitar</a>
+                        <a data-toggle="confirmation" href="{{app.url_auth}}premio/solicitar/{{premio.codigo}}/pontos/{{premio.pontos}}/usuario/{{app.my_session.get('userCodigo')}}" class="btn btn-success btn-block{%if app.my_session.get('pontos') < premio.pontos%}  disabled {%endif%}">Solicitar</a>
                     </td>
                     {%if app.my_session.get('userType') == true%}
                         <td>
