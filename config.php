@@ -1,22 +1,22 @@
 <?php
-
-// Variaveis e contantes de configuração aqui
-
+/**
+ * Variaveis e contantes de configuração aqui
+ */
 // Define se a aplicação esta em modo debug(true|false)
-define('DEBUG', TRUE);
+define('DEBUG', true);
 define('DS', DIRECTORY_SEPARATOR);
 define('APP_ROOT', realpath(__DIR__ . DS . '..'));
 // URL Base do projeto
-define('URL_BASE', 'http://bancodeideias.com.br/');
+define('URL_BASE', getenv("URL") .'/');
 
 // URL Public do projeto
 define('URL_PUBLIC', '/public');
 
 // URL que necessita estar autenticado
-define('URL_AUTH', 'http://bancodeideias.com.br/auth/');
+define('URL_AUTH', getenv("URL").'/auth/');
 
 // URL para exibir tela de acesso restrito
-define('URL_RESTRICT', 'http://bancodeideias.com.br/auth/restrict/');
+define('URL_RESTRICT', getenv("URL"). '/auth/restrict/');
 /**
  * Constantes de conexão com o Database
  */
