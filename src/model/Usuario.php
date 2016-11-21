@@ -11,6 +11,7 @@ class Usuario
     private $codigo;
     private $login;
     private $nome;
+    private $email;
     private $area;
     private $pontos;
     private $senha;
@@ -163,5 +164,25 @@ class Usuario
     public function setLogin($login)
     {
         $this->login = $login;
+    }
+
+    /**
+     * Get email.
+     *
+     * @return email.
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set email.
+     *
+     * @param email the value to set.
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 }

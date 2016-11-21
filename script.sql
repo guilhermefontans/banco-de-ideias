@@ -35,7 +35,7 @@ CREATE TABLE `area` (
   `nome` varchar(30) DEFAULT NULL,
   `descricao` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `area` (
 
 LOCK TABLES `area` WRITE;
 /*!40000 ALTER TABLE `area` DISABLE KEYS */;
-INSERT INTO `area` VALUES (1,'Suporte','Área responsável pelo suporte técnico'),(2,'Administração','Área responsável pela administração'),(3,'Financeiro','Área respons ável pelas finanças'),(4,'Comercial','Área responsável pelas compras e vendas'),(5,'Desenvolvimento','Área responsável pelo desenvolvimento de softwares');
+INSERT INTO `area` VALUES (1,'Suporte','Área responsável pelo suporte técnico'),(2,'Administração','Área responsável pela administração'),(3,'Financeiro','Área respons ável pelas finanças'),(4,'Comercial','Área responsável pelas compras e vendas'),(5,'Desenvolvimento','Área responsável pelo desenvolvimento de softwares'),(6,'Nova Área','Cadastro de área');
 /*!40000 ALTER TABLE `area` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ CREATE TABLE `ideia` (
   KEY `fk_usuario_idx` (`usuario`),
   CONSTRAINT `fk_area` FOREIGN KEY (`area`) REFERENCES `area` (`codigo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`codigo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `ideia` (
 
 LOCK TABLES `ideia` WRITE;
 /*!40000 ALTER TABLE `ideia` DISABLE KEYS */;
-INSERT INTO `ideia` VALUES (3,'Uma ideia','Apresentação da ideia...  ',1,31,'Em Analise','2016-10-23 20:43:16');
+INSERT INTO `ideia` VALUES (1,'Uma ideia','Apresentação da ideia...  ',1,1,'Em Analise','2016-10-23 20:43:16');
 /*!40000 ALTER TABLE `ideia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +93,7 @@ CREATE TABLE `premio` (
   `nome` varchar(40) DEFAULT NULL,
   `pontos` int(11) DEFAULT NULL,
   PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `premio` (
 
 LOCK TABLES `premio` WRITE;
 /*!40000 ALTER TABLE `premio` DISABLE KEYS */;
-INSERT INTO `premio` VALUES (2,'Tv 42 polegadas',10000),(3,'Microondas',400),(4,'SmartPhone',1000),(5,'Notebook',5000);
+INSERT INTO `premio` VALUES (1,'Tv 42 polegadas',10000),(2,'SmartPhone',1000),(3,'Notebook',5000),(6,'Folga de um dia',100),(7,'Folga de dois dia',200),(8,'Bonificação de R$100,00',300);
 /*!40000 ALTER TABLE `premio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +127,6 @@ CREATE TABLE `premio_retirado` (
 
 LOCK TABLES `premio_retirado` WRITE;
 /*!40000 ALTER TABLE `premio_retirado` DISABLE KEYS */;
-INSERT INTO `premio_retirado` VALUES (31,4,'2016-11-15 21:51:56');
 /*!40000 ALTER TABLE `premio_retirado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,6 +141,7 @@ CREATE TABLE `usuario` (
   `codigo` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(30) DEFAULT NULL,
   `nome` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `senha` varchar(62) DEFAULT NULL,
   `isadmin` tinyint(1) DEFAULT NULL,
   `area` int(10) DEFAULT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`codigo`),
   KEY `fk_usuario_2_idx` (`area`),
   CONSTRAINT `fk_usuario_2` FOREIGN KEY (`area`) REFERENCES `area` (`codigo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +158,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (31,'admin','Admin','$2y$10$O4xZuXN1DdUA2hDvAKqrQ.3agYutqG/CjxB.nlM7/NYB4mRWMrUYO',1,5,610),(39,'guilherme','Guilherme','$2y$10$Hv4kJggIkNy3Ch/vFpvmT.6R9V0ZPgGJl2rpgwUHhpHQeJyxEHvZ6',1,5,1027);
+INSERT INTO `usuario` VALUES (1,'admin','Admin','guilherme.fontans@gmail.com','$2y$10$O4xZuXN1DdUA2hDvAKqrQ.3agYutqG/CjxB.nlM7/NYB4mRWMrUYO',1,5,200),(2,'guilherme','Guilherme','guilherme.fontans@gmail.com','$2y$10$Hv4kJggIkNy3Ch/vFpvmT.6R9V0ZPgGJl2rpgwUHhpHQeJyxEHvZ6',1,5,200),(3,'operador','operador','guilherme.fontans@gmail.com','$2y$10$8wZhN//Wlp5JGj8m.uNxm.JDdyIWM.uwvy3l7WvlR//EkqurIqxIK',0,1,200);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -171,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-15 21:57:05
+-- Dump completed on 2016-11-18  1:10:02

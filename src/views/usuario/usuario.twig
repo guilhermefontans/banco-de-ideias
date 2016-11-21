@@ -17,6 +17,7 @@
                     <th>#</th>
                     <th>Nome</th>
                     <th>Login</th>
+                    <th>Email</th>
                     <th>Área</th>
                     <th>Pontos</th>
                     {%if app.my_session.get('userType') == true%}
@@ -29,6 +30,7 @@
                     <td>{{usuario.codigo}}</td>
                     <td>{{usuario.nome}}</td>
                     <td>{{usuario.login}}</td>
+                    <td>{{usuario.email}}</td>
                     <td>{{usuario.area}}</td>
                     <td>{{usuario.pontos}}</td>
                     {%if app.my_session.get('userType') == true%}

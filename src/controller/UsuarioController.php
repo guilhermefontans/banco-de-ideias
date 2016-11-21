@@ -28,6 +28,7 @@ class UsuarioController
                     "codigo" => null,
                     "login"   => request()->get('login'),
                     "nome"   => request()->get('nome'),
+                    "email"   => request()->get('email'),
                     "area"   => request()->get('area'),
                     "pontos" => request()->get('pontos'),
                     "isadmin" => $admin,
@@ -41,7 +42,7 @@ class UsuarioController
             session()->set('error', $ex->getMessage());
             return $app->redirect(URL_AUTH . 'usuario/add');
         }
-        session()->set('info', 'Usuário cadastrado com sucesso!'); 
+        session()->set('info', 'Usuário cadastrado com sucesso!');
         return $app->redirect(URL_AUTH . 'usuario');
     }
 
@@ -81,6 +82,7 @@ class UsuarioController
                 array(
                     "login"   => request()->get('login'),
                     "nome"   => request()->get('nome'),
+                    "email"   => request()->get('email'),
                     "area"   => request()->get('area'),
                     "pontos" => request()->get('pontos'),
                     "isadmin" => $admin
@@ -90,7 +92,7 @@ class UsuarioController
             session()->set('error', $ex->getMessage());
             return $app->redirect(URL_AUTH . 'usuario/add');
         }
-        session()->set('info', 'Usuário alterado com sucesso!'); 
+        session()->set('info', 'Usuário alterado com sucesso!');
         return $app->redirect(URL_AUTH . 'usuario');
     }
 
