@@ -24,6 +24,22 @@ abstract class Dao
             throw $ex;
         }
     }
+    public function getAdmins()
+    {   
+
+        try{
+            DB::beginTransaction();
+
+            $usuariosAdmins = DB::table($this->tableName)
+                ->where('isadmin',"=", "1")
+                ->get();
+            DB::commit();
+            return $usuariosAdmins;
+        } catch (Exception $ex){
+            DB::rollback();
+            throw $ex;
+        }
+    }
 
     public function update($filter = false, array $values)
     {

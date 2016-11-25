@@ -157,27 +157,44 @@ class UsuarioController
 
     public function solicitarPremio(Application $app, $codigoPremio, $pontos, $codigoUsuario)
     {
-        $usuarioDao = new UsuarioDao();
-        $userDb = $usuarioDao->byId($codigoUsuario);
-        $user = new Usuario();
-        $user->mount($userDb);
-        $usuarioDao->update(
-            array(
-                'codigo', '=', $codigoUsuario
-            ),
-            array(
-                "pontos"   => $user->getPontos() -  $pontos
-            )
+        try{
+            $usuarioDao = new UsuarioDao();
+            $userDb = $usuarioDao->byId($codigoUsuario);
+            $user = new Usuario();
+            $user->mount($userDb);
+            $usuarioDao->update(
+                array(
+                    'codigo', '=', $codigoUsuario
+                ),
+                array(
+                    "pontos"   => $user->getPontos() -  $pontos
+                )
+            );
+            $premioRetiradoDao = new PremioRetiradoDao();
+            $premioRetiradoDao->insert(
+                array(
+                    "codigo_usuario" => $codigoUsuario,
+                    "codigo_premio" => $codigoPremio,
+                    "data_retirada"   => date('Y-m-d H:i:s')
+                )
+            );
 
-        );
-        $premioRetiradoDao = new PremioRetiradoDao();
-        $premioRetiradoDao->insert(
-            array(
-                "codigo_usuario" => $codigoUsuario,
-                "codigo_premio" => $codigoPremio,
-                "data_retirada"   => date('Y-m-d H:i:s')
-            )
-        );
+            $admins = $usuarioDao->getAdmins();
+            $premioDao = new PremioDao();
+            $premio = $premioDao->byId($codigoPremio);
+
+            foreach ($admins as $admin) {
+                mail(
+                    $admin->email,
+                    "Solicitação de prêmio",
+                    "Olá, o usuário ".$user->getNome() . " solicitou o prêmio: " . $premio->nome,
+                    "From: Banco de Ideias <system@bancodeideias.org>"
+                );
+            }
+        } catch (\Exception $ex){
+            session()->set('error', $ex->getMessage());
+            return $app->redirect(URL_AUTH . 'premio');
+        }
         session()->set('info', 'Prêmio solicitado com sucesso!');
         return $app->redirect(URL_AUTH . 'premio');
     }
