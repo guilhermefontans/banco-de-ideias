@@ -40,11 +40,8 @@
             {% endfor %}
         </table>
     </div>
-    <p>
-        <a class="btn btn-primary" href="{{app.url_auth}}relatorio">
-            Relatório em PDF
-        </a>
-    </p>
+    {% set actionToPdf = app.url_auth ~ "premio/pdf" %}
+    {%include 'template/buttonPdf.twig'%}
 </div>
 
 {% endblock %}

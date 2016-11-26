@@ -1,0 +1,8 @@
+{% if app.my_session.get('userType') ==  true %}
+    <p>
+        <a class="btn btn-primary" href="{{actionToPdf}}">
+            Exportar para PDF
+            <span class="glyphicon glyphicon-save"></span>
+        </a>
+    </p>
+{%endif%}

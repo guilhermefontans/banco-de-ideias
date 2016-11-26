@@ -92,7 +92,20 @@ class PremioController
             session()->set('error', $ex->getMessage());
             return $app->redirect(URL_AUTH . 'premio');
         }
-        session()->set('info', 'Prêmio apagado com sucesso!'); 
+        session()->set('info', 'Prêmio apagado com sucesso!');
         return $app->redirect(URL_AUTH . 'premio');
+    }
+
+    public function relatorio(Application $app)
+    {
+        $relat = '/usr/share/nginx/html/banco-de-ideias/public/relatorio.html';
+        file_put_contents($relat, $this->all($app));
+        $file = function () use ($app, $relat) {
+            echo $app['snappy']->getOutPut('/usr/share/nginx/html/banco-de-ideias/public/relatorio.html');
+            unlink($relat);
+        };
+        return $app->stream($file, 200, [
+            'Content-Type' => 'application/pdf'
+        ]);
     }
 }

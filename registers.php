@@ -15,6 +15,10 @@ $app->register(new Silex\Provider\TwigServiceProvider, [
 
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => '/var/log/dbideias.log',
+    'monolog.level' => ERROR,
+    'monolog.level' => DEBUG,
+    'monolog.level' => INFO
+
 ));
 
 $app['request'] = Request::createFromGlobals();
@@ -51,12 +55,12 @@ unset($capsule);
 /**
  * Regitra Snappy PDF
  */
-/* $app['snappy'] = function () { */
-/*     $exe = 'vendor/bin/wkhtmltopdf-amd64'; */
-/*     return new Knp\Snappy\Pdf($exe); */
-/* }; */
+$app['snappy'] = function () {
+    $bin = 'vendor/bin/wkhtmltopdf';
+    return new Knp\Snappy\Pdf($bin);
+};
 
-/** 
+/**
  * Function Helper
  * Chamada do Twig nos Controllers
  */
