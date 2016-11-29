@@ -1,55 +1,53 @@
-{% extends 'template.twig' %}
 
-{% block content %}
+{%include 'template/header_form.twig'%}
+{% if area is not defined %}
+    {% set area = null %}
+{% endif %}
+<div class="page-header">
+    <h3>
+        {% if area is not null %}
+            Alteração
+            {% set action='area/update/' ~ area.codigo %}
+        {% else %}
+            Cadastro
+            {% set action='area/cadastrar' %}
+        {% endif %}
+        de Área
+    </h3>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        {%include 'template/showMessages.twig'%}
+        <form id="area-form" class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Nome:</label>
+                <div class="col-sm-8">
+                    <input type="text" maxlength="30"required name="nome" {% if area %} value="{{ area.nome}}" {% endif %} class="form-control" placeholder="Nome">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Descricao:</label>
+                <div class="col-sm-8">
+                    <input type="text" maxlength="60" required name="descricao" {% if area %} value="{{ area.descricao }}" {% endif %} class="form-control" placeholder="Descrição">
+                </div>
+            </div>
 
-    {% if area is not defined %}
-        {% set area = null %}
-    {% endif %}
-    <div class="page-header">
-        <h3>
-            {% if area is not null %}
-                Alteração
-                {% set action='area/update/' ~ area.codigo %}
-            {% else %}
-                Cadastro
-                {% set action='area/cadastrar' %}
-            {% endif %}
-            de Área
-        </h3>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-6">
+                    <button type="submit" class="btn btn-primary"
+                        {% if area is not null %}
+                            data-toggle="confirmation">Alterar
+                        {% else %}
+                            >Cadastrar
+                        {% endif %}
+                        <span class="glyphicon glyphicon-floppy-save"></span>
+                    </button>
+                    <a type="submit" class="btn btn-primary" href="{{app.url_auth}}area">Cancelar
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                    </a>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="row">
-        <div class="col-md-8">
-            {%include 'template/showMessages.twig'%}
-            <form id="area-form" class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Nome:</label>
-                    <div class="col-sm-8">
-                        <input type="text" maxlength="30"required name="nome" {% if area %} value="{{ area.nome}}" {% endif %} class="form-control" placeholder="Nome">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Descricao:</label>
-                    <div class="col-sm-8">
-                        <input type="text" maxlength="60" required name="descricao" {% if area %} value="{{ area.descricao }}" {% endif %} class="form-control" placeholder="Descrição">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-6">
-                        <button type="submit" class="btn btn-primary"
-                            {% if area is not null %}
-                                data-toggle="confirmation">Alterar
-                            {% else %}
-                                >Cadastrar
-                            {% endif %}
-                            <span class="glyphicon glyphicon-floppy-save"></span>
-                        </button>
-                        <a type="submit" class="btn btn-primary" href="{{app.url_auth}}area">Cancelar
-                            <span class="glyphicon glyphicon-arrow-left"></span>
-                        </a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-{% endblock %}
+</div>
+{%include 'template/footer_form.twig'%}

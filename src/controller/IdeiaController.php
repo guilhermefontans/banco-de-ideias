@@ -206,22 +206,21 @@ class IdeiaController
             $usuario = new Usuario();
             $usuario->mount($usuarioDao->byId($ideia->getUsuario()));
             $dao->delete(array('codigo', '=', $codigo));
+            $pontosAfterExclude = $usuario->getPontos() - IdeiaBO::getPontosToIdeiaExclude($ideia->getStatus());
             $usuarioDao->update(
                 array(
                     'codigo', '=', $usuario->getCodigo()
                 ),
                 array(
-                    "pontos" => $usuario
-                        ->getPontos() - IdeiaBO::getPontosToIdeiaExclude(
-                          $ideia->getStatus()
-                        )
+                    "pontos" => $pontosAfterExclude
                 )
             );
         }catch (\Exception $ex) {
             session()->set('error', $ex->getMessage());
             return $app->redirect(URL_AUTH . 'ideia');
         }
-        session()->set('info', 'Ideia apagada com sucesso!'); 
+        session()->set('info', 'Ideia apagada com sucesso!');
+        session()->set('pontos', $pontosAfterExclude);
 
         return $app->redirect(URL_AUTH . 'ideia');
     }

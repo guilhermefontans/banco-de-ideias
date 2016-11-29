@@ -1,47 +1,44 @@
-{% extends 'template.twig' %}
-
-{% block content %}
-    <div class="page-header">
-        <h3>Prêmios</h3>
-    </div>
-    {% set action = app.url_auth ~ "premio/add" %}
-    {% set destination = "PRÊMIO" %}
-    {%include 'template/buttonAdd.twig'%}
-    {%include 'template/showMessages.twig'%}
-
-    <div class="panel panel-primary">
-
-        <div class="panel-heading">Lista de Prêmios Cadastrados</div>
-        <table id="table-view" class="display cell-border">
-            <thead>
-                <th>#</th>
-                <th>Prêmio</th>
-                <th>Pontos</th>
-                <th>Solicitar Troca</th>
-                {%if app.my_session.get('userType') == true%}
-                    <th>Ações</th>
-                {%endif%}
-            </thead>
-            {% for premio in premios %}
-                <tr>
-                    <td>{{premio.codigo}}</td>
-                    <td>{{premio.nome}}</td>
-                    <td>{{premio.pontos}}</td>
-                    <td>
-                        <a data-toggle="confirmation" href="{{app.url_auth}}premio/solicitar/{{premio.codigo}}/pontos/{{premio.pontos}}/usuario/{{app.my_session.get('userCodigo')}}" class="btn btn-success btn-block{%if app.my_session.get('pontos') < premio.pontos%}  disabled {%endif%}">Solicitar</a>
-                    </td>
-                    {%if app.my_session.get('userType') == true%}
-                        <td>
-                            <a href="{{app.url_auth}}premio/alterar/{{premio.codigo}}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a data-toggle="confirmation" href="{{app.url_auth}}premio/delete/{{premio.codigo}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
-                        </td>
-                    {%endif%}
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
-    {% set actionToPdf = app.url_auth ~ "premio/pdf" %}
-    {%include 'template/buttonPdf.twig'%}
+{%include 'template/header.twig'%}
+<div class="page-header">
+    <h3>Prêmios</h3>
 </div>
+{% set action = app.url_auth ~ "premio/add" %}
+{% set destination = "PRÊMIO" %}
+{%include 'template/buttonAdd.twig'%}
+{%include 'template/showMessages.twig'%}
 
-{% endblock %}
+<div class="panel panel-primary">
+
+    <div class="panel-heading">Lista de Prêmios Cadastrados</div>
+    <table id="table-view" class="display cell-border">
+        <thead>
+            <th>#</th>
+            <th>Prêmio</th>
+            <th>Pontos</th>
+            <th>Solicitar Troca</th>
+            {%if app.my_session.get('userType') == true%}
+                <th>Ações</th>
+            {%endif%}
+        </thead>
+        {% for premio in premios %}
+            <tr>
+                <td>{{premio.codigo}}</td>
+                <td>{{premio.nome}}</td>
+                <td>{{premio.pontos}}</td>
+                <td>
+                    <a data-toggle="confirmation" href="{{app.url_auth}}premio/solicitar/{{premio.codigo}}/pontos/{{premio.pontos}}/usuario/{{app.my_session.get('userCodigo')}}" class="btn btn-success btn-block{%if app.my_session.get('pontos') < premio.pontos%}  disabled {%endif%}">Solicitar</a>
+                </td>
+                {%if app.my_session.get('userType') == true%}
+                    <td>
+                        <a href="{{app.url_auth}}premio/alterar/{{premio.codigo}}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a data-toggle="confirmation" href="{{app.url_auth}}premio/delete/{{premio.codigo}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                {%endif%}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% set actionToPdf = app.url_auth ~ "premio/pdf" %}
+{%include 'template/buttonPdf.twig'%}
+</div>
+{%include 'template/footer.twig'%}

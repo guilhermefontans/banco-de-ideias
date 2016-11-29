@@ -1,6 +1,5 @@
-{% extends 'template.twig' %}
+{%include 'template/header.twig'%}
 
-{% block content %}
     <div class="page-header">
         <h3>Usuários</h3>
     </div>
@@ -46,4 +45,4 @@
     {% set actionToPdf = app.url_auth ~ "usuario/pdf" %}
     {%include 'template/buttonPdf.twig'%}
 </div>
-{% endblock %}
+{%include 'template/footer.twig'%}

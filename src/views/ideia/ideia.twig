@@ -1,6 +1,4 @@
-{% extends 'template.twig' %}
-
-{% block content %}
+{%include 'template/header.twig'%}
     <div class="page-header">
         <h3>Ideias</h3>
     </div>
@@ -37,7 +35,7 @@
                     {%if app.my_session.get('userType') == true%}
                         <td>
                             <a href="{{app.url_auth}}ideia/alterar/{{ideia.codigo}}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a data-toggle="confirmation" href="{{app.url_auth}}ideia/delete/{{ideia.codigo}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a data-toggle="confirmation" href="{{app.url_auth}}ideia/delete/{{ideia.codigo}}" {%if ideia.status != "Nova"%}disabled="true"{%endif%} class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     {%endif%}
                 </tr>
@@ -47,4 +45,4 @@
     {% set actionToPdf = app.url_auth ~ "ideia/pdf" %}
     {%include 'template/buttonPdf.twig'%}
 </div>
-{% endblock %}
+{%include 'template/footer.twig'%}

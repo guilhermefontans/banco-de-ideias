@@ -1,43 +1,42 @@
-{% extends 'template.twig' %}
+{%include 'template/header.twig'%}
 
-{% block content %}
-    <div class="page-header">
-        <h3>Áreas</h3>
-    </div>
-    {% set action = app.url_auth ~ "area/add" %}
-    {% set destination = "ÁREA" %}
-    {%include 'template/buttonAdd.twig'%}
-    {%include 'template/showMessages.twig'%}
-
-    <div class="panel panel-primary">
-        <div class="panel-heading">Lista de Áreas Cadastradas</div>
-        <table id="table-view" class="display cell-border">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    {%if app.my_session.get('userType') == true%}
-                        <th>Ações</th>
-                    {%endif%}
-                </tr>
-            </thead>
-            {% for area in areas %}
-                <tr>
-                    <td>{{area.codigo}}</td>
-                    <td>{{area.nome}}</td>
-                    <td>{{area.descricao}}</td>
-                    {%if app.my_session.get('userType') == true%}
-                        <td>
-                            <a href="{{app.url_auth}}area/alterar/{{area.codigo}}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a data-toggle="confirmation" href="{{app.url_auth}}area/delete/{{area.codigo}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
-                        </td>
-                    {%endif%}
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
-    {% set actionToPdf = app.url_auth ~ "area/pdf" %}
-    {%include 'template/buttonPdf.twig'%}
+<div class="page-header">
+    <h3>Áreas</h3>
 </div>
-{% endblock %}
+{% set action = app.url_auth ~ "area/add" %}
+{% set destination = "ÁREA" %}
+{%include 'template/buttonAdd.twig'%}
+{%include 'template/showMessages.twig'%}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Lista de Áreas Cadastradas</div>
+    <table id="table-view" class="display cell-border">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                {%if app.my_session.get('userType') == true%}
+                    <th>Ações</th>
+                {%endif%}
+            </tr>
+        </thead>
+        {% for area in areas %}
+            <tr>
+                <td>{{area.codigo}}</td>
+                <td>{{area.nome}}</td>
+                <td>{{area.descricao}}</td>
+                {%if app.my_session.get('userType') == true%}
+                    <td>
+                        <a href="{{app.url_auth}}area/alterar/{{area.codigo}}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a data-toggle="confirmation" href="{{app.url_auth}}area/delete/{{area.codigo}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                {%endif%}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% set actionToPdf = app.url_auth ~ "area/pdf" %}
+{%include 'template/buttonPdf.twig'%}
+</div>
+{%include 'template/footer.twig'%}

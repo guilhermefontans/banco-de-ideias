@@ -11,7 +11,6 @@
         <link href="../public/css/main.css" rel="stylesheet">
         <link href="../public/css/login.css" rel="stylesheet">
 
-        <!-- Jquery table -->
         <link href="../public/css/jquery/jquery-ui.css" rel="stylesheet">
         <link href="../public/css/jquery/jquery-ui.theme.min.css" rel="stylesheet">
         <link href="../public/css/jqueryui-data-table.css" rel="stylesheet">
@@ -19,3 +18,18 @@
         {% block header %}{% endblock %}
     </head>
     <body>
+        {% include 'template/menu.twig' %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3 col-md-2 sidebar">
+                  <ul class="nav nav-pills nav-stacked">
+                    <li><a id="menuhome" href="{{app.url_auth}}home"><image src="../public/imagens/home.png"></image> Home </a></li>
+                    <li><a id="menuideia" href="{{app.url_auth}}ideia"><image src="../public/imagens/lampada.png"></image> Ideia</a></li>
+                    <li><a id="menupremio" href="{{app.url_auth}}premio"><image src="../public/imagens/medal.png"></image> Prêmio</a></li>
+                    <li><a id="menuarea" href="{{app.url_auth}}area"><image src="../public/imagens/equip.png"></image> Área</a></li>
+                    <li><a id="menuusuario" href="{{app.url_auth}}usuario"><image src="../public/imagens/user.png"></image> Usuário </a></li>
+                  </ul>
+                </div>
+                <div class="btn-group-vertical" role="group">
+            </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
