@@ -20,7 +20,7 @@
     <div class="col-md-8">
         {%include 'template/showMessages.twig'%}
         <div class="ajax-status"></div>
-        <form id="usuario-form" class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
+        <form {% if usuario is null %}id="usuario-form" {%else%}id="usuario"{%endif%}class="form-horizontal" method="POST" action="{{app.url_auth}}{{action}}">
             <div class="form-group">
                 <label class="col-sm-2 control-label">Login:</label>
                 <div class="col-sm-8">

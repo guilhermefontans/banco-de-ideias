@@ -5,13 +5,13 @@ validate = function(obj) {
                 required:true,
                 custom_valid_name:true,
                 minlength:3,
-                maxlength:30
+                maxlength:50
             },
             descricao: {
                 required:true,
                 custom_valid_name:true,
                 minlength:10,
-                maxlength:30
+                maxlength:50
             }
 
         },
@@ -19,12 +19,12 @@ validate = function(obj) {
             nome: {
                 required: "Nome obrigatório",
                 minlength:"Nome deve conter pelo menos 3 letras",
-                maxlength:"Nome deve conter no máximo 30 letras"
+                maxlength:"Nome deve conter no máximo 50 letras"
             },
             descricao: {
                 required: "Descrição obrigatória",
                 minlength:"Descrição deve conter pelo menos 10 letras",
-                maxlength:"Descrição deve conter no máximo 30 letras"
+                maxlength:"Descrição deve conter no máximo 50 letras"
             }
 
         }
@@ -35,7 +35,7 @@ validate = function(obj) {
             login: {
                 required:true,
                 minlength:3,
-                maxlength:30,
+                maxlength:50,
                 remote: {
                     url: '/src/model/check_login.php',
                     type: 'post'
@@ -45,7 +45,13 @@ validate = function(obj) {
                 required:true,
                 custom_valid_name:true,
                 minlength:3,
-                maxlength:30
+                maxlength:50
+            },
+            email: {
+                required:true,
+                custom_valid_email:true,
+                minlength:3,
+                maxlength:50
             },
             pontos: {
                 required:true,
@@ -65,13 +71,18 @@ validate = function(obj) {
             login: {
                 required: "Login obrigatório",
                 minlength:"Login deve conter pelo menos 3 letras",
-                maxlength:"Login deve conter no máximo 30 letras",
+                maxlength:"Login deve conter no máximo 50 letras",
                 remote: "Login já cadastrado"
             },
             nome: {
                 required: "Nome obrigatório",
                 minlength:"Nome deve conter pelo menos 3 letras",
-                maxlength:"Nome deve conter no máximo 30 letras"
+                maxlength:"Nome deve conter no máximo 50 letras"
+            },
+            email: {
+                required: "Email obrigatório",
+                minlength:"Email deve conter pelo menos 3 letras",
+                maxlength:"Email deve conter no máximo 50 letras"
             },
             pontos: {
                 required: "Pontos obrigatórios",
@@ -94,13 +105,13 @@ validate = function(obj) {
                 required:true,
                 custom_valid_name:true,
                 minlength:3,
-                maxlength:30
+                maxlength:50
             },
             descricao: {
                 required:true,
                 custom_valid_name:true,
                 minlength:10,
-                maxlength:30
+                maxlength:50
             }
 
         },
@@ -108,12 +119,12 @@ validate = function(obj) {
             nome: {
                 required: "Nome obrigatório",
                 minlength:"Nome deve conter pelo menos 3 letras",
-                maxlength:"Nome deve conter no máximo 30 letras"
+                maxlength:"Nome deve conter no máximo 50 letras"
             },
             descricao: {
                 required: "Descrição obrigatória",
                 minlength:"Descrição deve conter pelo menos 10 letras",
-                maxlength:"Descrição deve conter no máximo 30 letras"
+                maxlength:"Descrição deve conter no máximo 50 letras"
             }
 
         }
@@ -124,7 +135,7 @@ validate = function(obj) {
                 required:true,
                 custom_valid_name:true,
                 minlength:3,
-                maxlength:30
+                maxlength:50
             },
             pontos: {
                 required:true,
@@ -137,7 +148,7 @@ validate = function(obj) {
             nome: {
                 required: "Nome obrigatório",
                 minlength:"Nome deve conter pelo menos 3 letras",
-                maxlength:"Nome deve conter no máximo 30 letras"
+                maxlength:"Nome deve conter no máximo 50 letras"
             },
             pontos: {
                 required: "Pontos obrigatórios",
@@ -147,6 +158,9 @@ validate = function(obj) {
 
         }
     })
+    jQuery.validator.addMethod("custom_valid_email",function(value,element){
+        return this.optional(element) || /\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3}/.test(value);
+    },"Email inválido");
     jQuery.validator.addMethod("custom_valid_name",function(value, element){
         return this.optional(element) || /(^[a-z,A-Z]+\s?)/.test(value);
     },"Nome inválido");
