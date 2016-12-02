@@ -29,12 +29,17 @@ $auth->before(function() use ($app) {
 //Verifica se usurario tem permissão de edição
 $auth->before(function() use ($app) {
     if (!Auth::isAdmin()) {
+
         $pattern = '/(add|delete|alterar|update)/';
         preg_match($pattern, $_SERVER['REQUEST_URI'], $matches);
 
         $app['monolog']->addInfo(print_r($matches, true));
-        if($matches){
-            return $app->redirect(URL_RESTRICT);
+        if($matches) {
+            $pattern = '/(ideia\/add)/';
+            preg_match($pattern, $_SERVER['REQUEST_URI'], $matches2);
+            if(!$matches2) {
+                return $app->redirect(URL_RESTRICT);
+            }
         }
     }
 });

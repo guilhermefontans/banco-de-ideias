@@ -55,7 +55,10 @@ class IdeiaController
             return $app->redirect(URL_AUTH . 'ideia/add');
         }
         session()->set('info', 'Ideia cadastrada com sucesso!'); 
-        session()->set('pontos', $pontosAfterInsert);
+        if ($usuario->getCodigo() === session()->get('userCodigo')) {
+            session()->set('pontos', $pontosAfterInsert);
+        }
+
         return $app->redirect(URL_AUTH . 'ideia');
     }
 
@@ -129,7 +132,9 @@ class IdeiaController
             return $app->redirect(URL_AUTH . 'ideia/add');
         }
         session()->set('info', 'Ideia atualizada com sucesso!'); 
-        session()->set('pontos', $pontosAfterInsert);
+        if ($usuario->getCodigo() === session()->get('userCodigo')) {
+            session()->set('pontos', $pontosAfterInsert);
+        }
         return $app->redirect(URL_AUTH . 'ideia');
     }
 
@@ -220,7 +225,9 @@ class IdeiaController
             return $app->redirect(URL_AUTH . 'ideia');
         }
         session()->set('info', 'Ideia apagada com sucesso!');
-        session()->set('pontos', $pontosAfterExclude);
+        if ($usuario->getCodigo() === session()->get('userCodigo')) {
+            session()->set('pontos', $pontosAfterExclude);
+        }
 
         return $app->redirect(URL_AUTH . 'ideia');
     }
