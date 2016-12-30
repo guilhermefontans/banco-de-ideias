@@ -28,8 +28,12 @@ class IdeiaBo
         $array;
         if ($status == 'Nova') {
             $array = ['Nova', 'Em Analise', 'Aceita', 'Encerrada'];
-        } else if ($status != 'Nova') {
+        } else if ($status == 'Em Analise') {
             $array = ['Em Analise', 'Aceita', 'Encerrada'];
+        } else if ($status == 'Aceita') {
+            $array = ['Aceita', 'Encerrada'];
+        } else if ($status == 'Encerrada') {
+            $array = ['Encerrada'];
         }
         return $array;
     }
